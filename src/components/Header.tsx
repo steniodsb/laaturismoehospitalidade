@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X, Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import logoLaa from "@/assets/logo-laa.webp";
 
 const navLinks = [
   { label: "Início", to: "/" },
@@ -23,13 +24,7 @@ const Header = () => {
       <div className="container flex items-center justify-between h-16 md:h-20">
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2">
-          <div className="flex items-center gap-1">
-            <span className="text-2xl md:text-3xl font-serif font-bold text-primary">LAA</span>
-            <div className="hidden sm:block leading-tight">
-              <span className="block text-xs font-semibold tracking-wider text-foreground/80">TURISMO &</span>
-              <span className="block text-xs font-semibold tracking-wider text-secondary">HOSPITALIDADE</span>
-            </div>
-          </div>
+          <img src={logoLaa} alt="LAA Turismo & Hospitalidade" className="h-12 md:h-14 w-auto" />
         </Link>
 
         {/* Desktop Nav */}
