@@ -16,6 +16,24 @@ export interface City {
   region?: string;
 }
 
+export interface EstablishmentGalleryImage {
+  url: string;
+  caption?: string;
+}
+
+export interface HospedagemDetails {
+  checkIn?: string;
+  checkOut?: string;
+  roomTypes?: string[];
+  priceRange?: string;
+  petsAllowed?: boolean;
+  breakfastIncluded?: boolean;
+  parkingIncluded?: boolean;
+  totalRooms?: number;
+  languages?: string[];
+  cancellationPolicy?: string;
+}
+
 export interface Establishment {
   id: string;
   name: string;
@@ -25,11 +43,15 @@ export interface Establishment {
   description: string;
   shortDescription: string;
   image: string;
+  gallery?: EstablishmentGalleryImage[];
   amenities: string[];
   phone?: string;
   whatsapp?: string;
   address?: string;
   rating?: number;
+  latitude?: number;
+  longitude?: number;
+  hospedagemDetails?: HospedagemDetails;
 }
 
 export interface EventItem {
@@ -196,12 +218,33 @@ export const establishments: Establishment[] = [
     category: "hospedagem",
     cityId: "sao-jose-do-rio-preto",
     cityName: "São José do Rio Preto",
-    description: "Hotel de luxo no coração de Rio Preto com piscina, spa e restaurante premiado.",
+    description: "Hotel de luxo no coração de Rio Preto com piscina, spa e restaurante premiado. Localizado na região central, oferece fácil acesso aos principais pontos turísticos e de negócios da cidade. Quartos amplos com decoração contemporânea e vista panorâmica.",
     shortDescription: "Luxo e conforto no coração da cidade.",
     image: hotelImg,
-    amenities: ["Wi-Fi", "Piscina", "Spa", "Restaurante", "Estacionamento"],
+    gallery: [
+      { url: hotelImg, caption: "Fachada do hotel" },
+      { url: restaurantImg, caption: "Restaurante premiado" },
+      { url: tourismImg, caption: "Área de lazer" },
+    ],
+    amenities: ["Wi-Fi", "Piscina", "Spa", "Restaurante", "Estacionamento", "Academia", "Room Service", "Lavanderia"],
     phone: "(17) 3211-0000",
+    whatsapp: "5517932110000",
+    address: "Rua Silva Jardim, 3200 - Centro, São José do Rio Preto - SP",
     rating: 4.8,
+    latitude: -20.8113,
+    longitude: -49.3758,
+    hospedagemDetails: {
+      checkIn: "14:00",
+      checkOut: "12:00",
+      roomTypes: ["Standard", "Superior", "Suíte Executiva", "Suíte Presidencial"],
+      priceRange: "R$ 280 - R$ 850",
+      petsAllowed: false,
+      breakfastIncluded: true,
+      parkingIncluded: true,
+      totalRooms: 120,
+      languages: ["Português", "Inglês", "Espanhol"],
+      cancellationPolicy: "Cancelamento gratuito até 48h antes do check-in",
+    },
   },
   {
     id: "pousada-aguas-ibira",
@@ -209,12 +252,32 @@ export const establishments: Establishment[] = [
     category: "hospedagem",
     cityId: "ibira",
     cityName: "Ibirá",
-    description: "Pousada charmosa próxima às fontes termais, ideal para relaxar e recarregar as energias.",
+    description: "Pousada charmosa próxima às fontes termais, ideal para relaxar e recarregar as energias. Ambiente familiar com jardins exuberantes e acesso direto às piscinas de águas minerais naturais.",
     shortDescription: "Charme e tranquilidade nas termas.",
     image: hotelImg,
-    amenities: ["Wi-Fi", "Piscina Termal", "Café da Manhã", "Jardim"],
+    gallery: [
+      { url: hotelImg, caption: "Vista da pousada" },
+      { url: tourismImg, caption: "Piscina termal" },
+    ],
+    amenities: ["Wi-Fi", "Piscina Termal", "Café da Manhã", "Jardim", "Estacionamento"],
     phone: "(17) 3234-0000",
+    whatsapp: "5517932340000",
+    address: "Av. das Fontes, 450 - Centro, Ibirá - SP",
     rating: 4.6,
+    latitude: -21.0819,
+    longitude: -49.6239,
+    hospedagemDetails: {
+      checkIn: "15:00",
+      checkOut: "11:00",
+      roomTypes: ["Standard", "Chalé Casal", "Chalé Família"],
+      priceRange: "R$ 180 - R$ 420",
+      petsAllowed: true,
+      breakfastIncluded: true,
+      parkingIncluded: true,
+      totalRooms: 24,
+      languages: ["Português"],
+      cancellationPolicy: "Cancelamento gratuito até 24h antes do check-in",
+    },
   },
   {
     id: "restaurante-sabor-caipira",
