@@ -6,7 +6,11 @@ import { Button } from "@/components/ui/button";
 const navLinks = [
   { label: "Início", to: "/" },
   { label: "Cidades", to: "/cidades" },
-  { label: "Explorar", to: "/explorar" },
+  { label: "Hospedagem", to: "/explorar?cat=hospedagem" },
+  { label: "Gastronomia", to: "/explorar?cat=gastronomia" },
+  { label: "Lazer", to: "/explorar?cat=lazer" },
+  { label: "Cultura", to: "/explorar?cat=cultura" },
+  { label: "Comércio", to: "/explorar?cat=comercio" },
   { label: "Eventos", to: "/eventos" },
 ];
 
