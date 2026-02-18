@@ -21,6 +21,20 @@ export interface EstablishmentGalleryImage {
   caption?: string;
 }
 
+export interface GastronomiaDetails {
+  cuisineType?: string;
+  priceRange?: string;
+  specialties?: string[];
+  openingHours?: string;
+  reservationRequired?: boolean;
+  delivery?: boolean;
+  liveMusic?: boolean;
+  outdoorSeating?: boolean;
+  capacity?: number;
+  paymentMethods?: string[];
+  chefName?: string;
+}
+
 export interface HospedagemDetails {
   checkIn?: string;
   checkOut?: string;
@@ -52,6 +66,7 @@ export interface Establishment {
   latitude?: number;
   longitude?: number;
   hospedagemDetails?: HospedagemDetails;
+  gastronomiaDetails?: GastronomiaDetails;
 }
 
 export interface EventItem {
@@ -290,7 +305,27 @@ export const establishments: Establishment[] = [
     image: restaurantImg,
     amenities: ["Estacionamento", "Ar Condicionado", "Acessível"],
     phone: "(17) 3222-1111",
-    rating: 4.7,
+    address: "Rua Bernardino de Campos, 1500 - Centro, São José do Rio Preto - SP",
+    latitude: -20.8150,
+    longitude: -49.3790,
+    gallery: [
+      { url: restaurantImg, caption: "Salão principal" },
+      { url: hotelImg, caption: "Ambiente externo" },
+      { url: tourismImg, caption: "Pratos típicos" },
+    ],
+    gastronomiaDetails: {
+      cuisineType: "Cozinha Caipira / Regional",
+      priceRange: "R$ 45 - R$ 120",
+      specialties: ["Frango com quiabo", "Leitão à pururuca", "Arroz carreteiro", "Pamonha recheada", "Doce de leite na palha"],
+      openingHours: "Ter-Dom: 11h às 15h / 18h às 23h",
+      reservationRequired: true,
+      delivery: false,
+      liveMusic: true,
+      outdoorSeating: true,
+      capacity: 80,
+      paymentMethods: ["Dinheiro", "Pix", "Cartão de Crédito", "Cartão de Débito"],
+      chefName: "Chef Maria Aparecida",
+    },
   },
   {
     id: "parque-represa-ibira",

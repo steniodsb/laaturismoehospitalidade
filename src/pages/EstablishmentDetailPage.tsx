@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import { MapPin, Phone, Star, ArrowLeft, Clock, Navigation, Bed, Users, Globe, DogIcon, Coffee, Car, X, ChevronLeft, ChevronRight, MessageCircle } from "lucide-react";
+import { MapPin, Phone, Star, ArrowLeft, Clock, Navigation, Bed, Users, Globe, DogIcon, Coffee, Car, X, ChevronLeft, ChevronRight, MessageCircle, UtensilsCrossed, Music, TreePine, CreditCard, ChefHat, CalendarCheck, Truck } from "lucide-react";
 import { establishments, categoryLabels, categoryIcons } from "@/data/mockData";
 import { Button } from "@/components/ui/button";
 
@@ -24,7 +24,9 @@ const EstablishmentDetailPage = () => {
   }
 
   const isHospedagem = est.category === "hospedagem";
+  const isGastronomia = est.category === "gastronomia";
   const details = est.hospedagemDetails;
+  const gastroDetails = est.gastronomiaDetails;
   const allImages = est.gallery?.length ? est.gallery : [{ url: est.image, caption: est.name }];
 
   const openRoute = () => {
@@ -81,6 +83,9 @@ const EstablishmentDetailPage = () => {
               )}
               {isHospedagem && details?.priceRange && (
                 <span className="text-background/90 font-medium">{details.priceRange}</span>
+              )}
+              {isGastronomia && gastroDetails?.cuisineType && (
+                <span className="text-background/90 font-medium">{gastroDetails.cuisineType}</span>
               )}
             </div>
           </div>
@@ -216,7 +221,114 @@ const EstablishmentDetailPage = () => {
                 </div>
               )}
 
-              {/* Amenities */}
+              {/* Gastronomia-specific details */}
+              {isGastronomia && gastroDetails && (
+                <div className="bg-muted/30 rounded-xl border border-border p-6">
+                  <h3 className="text-xl font-serif text-foreground mb-5">Detalhes do Restaurante</h3>
+                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                    {gastroDetails.cuisineType && (
+                      <div className="flex items-start gap-3">
+                        <UtensilsCrossed className="h-5 w-5 text-primary mt-0.5" />
+                        <div>
+                          <p className="text-xs text-muted-foreground">Cozinha</p>
+                          <p className="text-sm font-medium text-foreground">{gastroDetails.cuisineType}</p>
+                        </div>
+                      </div>
+                    )}
+                    {gastroDetails.openingHours && (
+                      <div className="flex items-start gap-3">
+                        <Clock className="h-5 w-5 text-primary mt-0.5" />
+                        <div>
+                          <p className="text-xs text-muted-foreground">Horário</p>
+                          <p className="text-sm font-medium text-foreground">{gastroDetails.openingHours}</p>
+                        </div>
+                      </div>
+                    )}
+                    {gastroDetails.capacity && (
+                      <div className="flex items-start gap-3">
+                        <Users className="h-5 w-5 text-primary mt-0.5" />
+                        <div>
+                          <p className="text-xs text-muted-foreground">Capacidade</p>
+                          <p className="text-sm font-medium text-foreground">{gastroDetails.capacity} pessoas</p>
+                        </div>
+                      </div>
+                    )}
+                    {gastroDetails.chefName && (
+                      <div className="flex items-start gap-3">
+                        <ChefHat className="h-5 w-5 text-primary mt-0.5" />
+                        <div>
+                          <p className="text-xs text-muted-foreground">Chef</p>
+                          <p className="text-sm font-medium text-foreground">{gastroDetails.chefName}</p>
+                        </div>
+                      </div>
+                    )}
+                    {gastroDetails.reservationRequired !== undefined && (
+                      <div className="flex items-start gap-3">
+                        <CalendarCheck className="h-5 w-5 text-primary mt-0.5" />
+                        <div>
+                          <p className="text-xs text-muted-foreground">Reserva</p>
+                          <p className="text-sm font-medium text-foreground">{gastroDetails.reservationRequired ? "Recomendada" : "Não necessária"}</p>
+                        </div>
+                      </div>
+                    )}
+                    {gastroDetails.delivery !== undefined && (
+                      <div className="flex items-start gap-3">
+                        <Truck className="h-5 w-5 text-primary mt-0.5" />
+                        <div>
+                          <p className="text-xs text-muted-foreground">Delivery</p>
+                          <p className="text-sm font-medium text-foreground">{gastroDetails.delivery ? "Disponível" : "Não disponível"}</p>
+                        </div>
+                      </div>
+                    )}
+                    {gastroDetails.liveMusic !== undefined && (
+                      <div className="flex items-start gap-3">
+                        <Music className="h-5 w-5 text-primary mt-0.5" />
+                        <div>
+                          <p className="text-xs text-muted-foreground">Música ao Vivo</p>
+                          <p className="text-sm font-medium text-foreground">{gastroDetails.liveMusic ? "Sim" : "Não"}</p>
+                        </div>
+                      </div>
+                    )}
+                    {gastroDetails.outdoorSeating !== undefined && (
+                      <div className="flex items-start gap-3">
+                        <TreePine className="h-5 w-5 text-primary mt-0.5" />
+                        <div>
+                          <p className="text-xs text-muted-foreground">Área Externa</p>
+                          <p className="text-sm font-medium text-foreground">{gastroDetails.outdoorSeating ? "Disponível" : "Não disponível"}</p>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+
+                  {gastroDetails.specialties && gastroDetails.specialties.length > 0 && (
+                    <div className="mt-5 pt-5 border-t border-border">
+                      <p className="text-sm font-semibold text-foreground mb-2">Especialidades da Casa</p>
+                      <div className="flex flex-wrap gap-2">
+                        {gastroDetails.specialties.map((s) => (
+                          <span key={s} className="inline-flex items-center gap-1.5 bg-secondary/10 text-secondary text-sm px-3 py-1.5 rounded-full font-medium">
+                            <UtensilsCrossed className="h-3.5 w-3.5" /> {s}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {gastroDetails.paymentMethods && gastroDetails.paymentMethods.length > 0 && (
+                    <div className="mt-4 pt-4 border-t border-border">
+                      <p className="text-sm font-semibold text-foreground mb-2">Formas de Pagamento</p>
+                      <div className="flex flex-wrap gap-2">
+                        {gastroDetails.paymentMethods.map((p) => (
+                          <span key={p} className="inline-flex items-center gap-1.5 bg-muted text-foreground text-xs px-2.5 py-1 rounded-full">
+                            <CreditCard className="h-3 w-3" /> {p}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )}
+
+
               <div>
                 <h3 className="text-xl font-serif text-foreground mb-4">Comodidades</h3>
                 <div className="flex flex-wrap gap-2">
@@ -308,6 +420,14 @@ const EstablishmentDetailPage = () => {
                   <p className="text-sm text-muted-foreground mb-1">A partir de</p>
                   <p className="text-2xl font-bold text-primary">{details.priceRange}</p>
                   <p className="text-xs text-muted-foreground mt-1">por noite</p>
+                </div>
+              )}
+
+              {isGastronomia && gastroDetails?.priceRange && (
+                <div className="bg-secondary/5 rounded-xl border border-secondary/20 p-6">
+                  <p className="text-sm text-muted-foreground mb-1">Faixa de Preço</p>
+                  <p className="text-2xl font-bold text-secondary">{gastroDetails.priceRange}</p>
+                  <p className="text-xs text-muted-foreground mt-1">por pessoa</p>
                 </div>
               )}
             </div>
