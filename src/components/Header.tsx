@@ -1,8 +1,9 @@
 import { useState, useRef, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, Search, ChevronDown } from "lucide-react";
+import { Menu, X, Search, ChevronDown, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { categoryLabels, categoryIcons, type EstablishmentCategory } from "@/data/mockData";
+import { useAuth } from "@/hooks/useAuth";
 import logoLaa from "@/assets/logo-laa.webp";
 
 const categoryLinks = (Object.keys(categoryLabels) as EstablishmentCategory[]).map((key) => ({
@@ -14,6 +15,7 @@ const Header = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [catOpen, setCatOpen] = useState(false);
   const location = useLocation();
+  const { user } = useAuth();
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -105,9 +107,19 @@ const Header = () => {
               <Search className="h-5 w-5" />
             </Button>
           </Link>
-          <Button variant="default" size="sm" className="bg-primary text-primary-foreground hover:bg-primary/90">
-            Anuncie Aqui
-          </Button>
+          {user ? (
+            <Link to="/admin">
+              <Button variant="default" size="sm" className="gap-2">
+                <User className="h-4 w-4" /> Painel
+              </Button>
+            </Link>
+          ) : (
+            <Link to="/login">
+              <Button variant="default" size="sm" className="gap-2">
+                <User className="h-4 w-4" /> Entrar
+              </Button>
+            </Link>
+          )}
         </div>
 
         {/* Mobile Toggle */}
@@ -162,7 +174,15 @@ const Header = () => {
             </Link>
 
             <div className="pt-2 border-t border-border mt-2">
-              <Button className="w-full bg-primary text-primary-foreground">Anuncie Aqui</Button>
+              {user ? (
+                <Link to="/admin" onClick={() => setMobileOpen(false)}>
+                  <Button className="w-full gap-2"><User className="h-4 w-4" /> Painel Admin</Button>
+                </Link>
+              ) : (
+                <Link to="/login" onClick={() => setMobileOpen(false)}>
+                  <Button className="w-full gap-2"><User className="h-4 w-4" /> Entrar</Button>
+                </Link>
+              )}
             </div>
           </nav>
         </div>
