@@ -8,6 +8,9 @@ const categories: { key: EstablishmentCategory; color: string }[] = [
   { key: "cultura", color: "from-secondary/15 to-primary/10" },
   { key: "artesanato", color: "from-primary/10 to-accent/50" },
   { key: "comercio", color: "from-secondary/10 to-muted/50" },
+  { key: "emergencia", color: "from-destructive/20 to-destructive/5" },
+  { key: "utilidade_publica", color: "from-primary/10 to-muted/30" },
+  { key: "servicos", color: "from-secondary/10 to-accent/30" },
 ];
 
 const CategoryGrid = () => {
@@ -20,7 +23,7 @@ const CategoryGrid = () => {
             Encontre exatamente o que você procura no interior paulista
           </p>
         </div>
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 xl:grid-cols-9 gap-4">
           {categories.map((cat) => (
             <Link
               key={cat.key}

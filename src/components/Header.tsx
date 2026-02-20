@@ -12,6 +12,9 @@ const navLinks = [
   { label: "Lazer", to: "/explorar?cat=lazer" },
   { label: "Cultura", to: "/explorar?cat=cultura" },
   { label: "Comércio", to: "/explorar?cat=comercio" },
+  { label: "Emergência", to: "/explorar?cat=emergencia" },
+  { label: "Utilidade Pública", to: "/explorar?cat=utilidade_publica" },
+  { label: "Serviços", to: "/explorar?cat=servicos" },
   { label: "Eventos", to: "/eventos" },
 ];
 

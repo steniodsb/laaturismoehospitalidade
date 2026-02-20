@@ -87,7 +87,10 @@ export type EstablishmentCategory =
   | "lazer"
   | "cultura"
   | "artesanato"
-  | "comercio";
+  | "comercio"
+  | "emergencia"
+  | "utilidade_publica"
+  | "servicos";
 
 export const categoryLabels: Record<EstablishmentCategory, string> = {
   hospedagem: "Hospedagem",
@@ -96,6 +99,9 @@ export const categoryLabels: Record<EstablishmentCategory, string> = {
   cultura: "Cultura",
   artesanato: "Artesanato",
   comercio: "Comércio",
+  emergencia: "Urgência / Emergência",
+  utilidade_publica: "Utilidade Pública",
+  servicos: "Serviços",
 };
 
 export const categoryIcons: Record<EstablishmentCategory, string> = {
@@ -105,6 +111,9 @@ export const categoryIcons: Record<EstablishmentCategory, string> = {
   cultura: "🎭",
   artesanato: "🎨",
   comercio: "🛒",
+  emergencia: "🚨",
+  utilidade_publica: "🏛️",
+  servicos: "🔧",
 };
 
 export const cities: City[] = [
