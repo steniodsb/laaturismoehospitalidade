@@ -41,6 +41,7 @@ const EstablishmentsAdminPage = () => {
   const [form, setForm] = useState<Record<string, any>>({
     name: "", slug: "", city_id: "", category_id: "", description: "", short_description: "",
     image_url: "", phone: "", whatsapp: "", address: "", amenities: "", latitude: "", longitude: "",
+    is_featured: false, display_order: "0",
   });
   const [details, setDetails] = useState<Record<string, any>>({});
   const [gallery, setGallery] = useState<{ url: string; caption?: string }[]>([]);
@@ -78,7 +79,7 @@ const EstablishmentsAdminPage = () => {
   ];
 
   const resetForm = () => {
-    setForm({ name: "", slug: "", city_id: "", category_id: "", description: "", short_description: "", image_url: "", phone: "", whatsapp: "", address: "", amenities: "", latitude: "", longitude: "" });
+    setForm({ name: "", slug: "", city_id: "", category_id: "", description: "", short_description: "", image_url: "", phone: "", whatsapp: "", address: "", amenities: "", latitude: "", longitude: "", is_featured: false, display_order: "0" });
     setDetails({});
     setGallery([]);
     setSelectedTags([]);
@@ -100,6 +101,7 @@ const EstablishmentsAdminPage = () => {
         phone: full.phone || "", whatsapp: full.whatsapp || "", address: full.address || "",
         amenities: (full.amenities || []).join(", "),
         latitude: full.latitude?.toString() || "", longitude: full.longitude?.toString() || "",
+        is_featured: full.is_featured || false, display_order: String(full.display_order || 0),
       });
       setGallery(Array.isArray(d.gallery) ? d.gallery : []);
       const { gallery: _g, ...rest } = d;
@@ -124,6 +126,7 @@ const EstablishmentsAdminPage = () => {
       latitude: form.latitude ? parseFloat(form.latitude) : null,
       longitude: form.longitude ? parseFloat(form.longitude) : null,
       details: fullDetails,
+      is_featured: !!form.is_featured, display_order: parseInt(form.display_order) || 0,
     };
 
     let estId = editing?.id;

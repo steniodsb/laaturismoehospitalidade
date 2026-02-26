@@ -49,6 +49,14 @@ const CommonFields = ({ form, set, categories, cities, tags, selectedTags, toggl
     <ImageUpload value={form.image_url} onChange={(url) => set("image_url", url)} path={storagePath} />
     <GalleryUpload value={gallery} onChange={onGalleryChange} path={`${storagePath}/gallery`} />
 
+    <div className="grid grid-cols-2 gap-3 border-t border-border pt-4">
+      <div className="flex items-center gap-2">
+        <input type="checkbox" checked={!!form.is_featured} onChange={(e) => set("is_featured", e.target.checked)} id="est-featured" className="h-4 w-4 rounded border-input" />
+        <label htmlFor="est-featured" className="text-sm font-medium text-foreground cursor-pointer">⭐ Exibir na tela inicial</label>
+      </div>
+      <div><label className="text-sm font-medium text-foreground mb-1.5 block">Ordem de exibição</label><Input type="number" value={form.display_order} onChange={(e) => set("display_order", e.target.value)} /></div>
+    </div>
+
     {tags.length > 0 && (
       <div>
         <label className="text-sm font-medium text-foreground mb-2 block">Tags</label>
