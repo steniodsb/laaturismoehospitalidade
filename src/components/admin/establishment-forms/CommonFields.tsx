@@ -44,10 +44,6 @@ const CommonFields = ({ form, set, categories, cities, tags, selectedTags, toggl
       <div><label className="text-sm font-medium text-foreground mb-1.5 block">WhatsApp</label><Input value={form.whatsapp} onChange={(e) => set("whatsapp", e.target.value)} /></div>
     </div>
     <div><label className="text-sm font-medium text-foreground mb-1.5 block">Endereço</label><Input value={form.address} onChange={(e) => set("address", e.target.value)} /></div>
-    <div className="grid grid-cols-2 gap-3">
-      <div><label className="text-sm font-medium text-foreground mb-1.5 block">Latitude</label><Input type="number" step="any" value={form.latitude} onChange={(e) => set("latitude", e.target.value)} /></div>
-      <div><label className="text-sm font-medium text-foreground mb-1.5 block">Longitude</label><Input type="number" step="any" value={form.longitude} onChange={(e) => set("longitude", e.target.value)} /></div>
-    </div>
     <div><label className="text-sm font-medium text-foreground mb-1.5 block">Comodidades (separar por vírgula)</label><Input value={form.amenities} onChange={(e) => set("amenities", e.target.value)} placeholder="Wi-Fi, Piscina, Estacionamento" /></div>
     
     <ImageUpload value={form.image_url} onChange={(url) => set("image_url", url)} path={storagePath} />
