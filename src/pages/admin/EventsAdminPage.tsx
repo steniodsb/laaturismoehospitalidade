@@ -6,6 +6,7 @@ import DeleteDialog from "@/components/admin/DeleteDialog";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
+import ImageUpload from "@/components/admin/establishment-forms/ImageUpload";
 
 interface EventItem {
   id: string;
@@ -112,7 +113,7 @@ const EventsAdminPage = () => {
           </select>
         </div>
         <div><label className="text-sm font-medium text-foreground mb-1.5 block">Descrição</label><Textarea value={form.description} onChange={(e) => set("description", e.target.value)} /></div>
-        <div><label className="text-sm font-medium text-foreground mb-1.5 block">URL da Imagem</label><Input value={form.image_url} onChange={(e) => set("image_url", e.target.value)} /></div>
+        <ImageUpload value={form.image_url} onChange={(url) => set("image_url", url)} path={`events/${editing?.id || "new"}`} label="Imagem do evento" />
       </FormModal>
       <DeleteDialog open={deleteOpen} onClose={() => setDeleteOpen(false)} onConfirm={handleDelete} loading={loading} itemName={deleting?.name} />
     </>
