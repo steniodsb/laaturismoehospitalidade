@@ -2,7 +2,7 @@ import { Outlet, Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import {
   LayoutDashboard, Building2, MapPin, Tag, Tags, Calendar,
-  Users, LogOut, Menu, X, ChevronLeft
+  Users, LogOut, Menu, X, ChevronLeft, Image
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
@@ -10,6 +10,7 @@ import logoLaa from "@/assets/logo-laa.webp";
 
 const navItems = [
   { to: "/admin", label: "Dashboard", icon: LayoutDashboard, exact: true },
+  { to: "/admin/banners", label: "Banners", icon: Image },
   { to: "/admin/estabelecimentos", label: "Estabelecimentos", icon: Building2 },
   { to: "/admin/cidades", label: "Cidades", icon: MapPin },
   { to: "/admin/categorias", label: "Categorias", icon: Tag },

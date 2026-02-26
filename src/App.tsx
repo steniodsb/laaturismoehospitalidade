@@ -24,6 +24,7 @@ import CitiesAdminPage from "./pages/admin/CitiesAdminPage";
 import CategoriesAdminPage from "./pages/admin/CategoriesAdminPage";
 import TagsAdminPage from "./pages/admin/TagsAdminPage";
 import EventsAdminPage from "./pages/admin/EventsAdminPage";
+import BannersAdminPage from "./pages/admin/BannersAdminPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -55,6 +56,7 @@ const AppContent = () => {
           <Route path="categorias" element={<CategoriesAdminPage />} />
           <Route path="tags" element={<TagsAdminPage />} />
           <Route path="eventos" element={<EventsAdminPage />} />
+          <Route path="banners" element={<BannersAdminPage />} />
         </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>
