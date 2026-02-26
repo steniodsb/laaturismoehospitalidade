@@ -3,26 +3,36 @@ import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Upload, X, Loader2 } from "lucide-react";
 
+const MAX_FILE_SIZE_MB = 5;
+
 interface ImageUploadProps {
   value: string;
   onChange: (url: string) => void;
   bucket?: string;
   path?: string;
   label?: string;
+  maxSizeMB?: number;
 }
 
-const ImageUpload = ({ value, onChange, bucket = "establishment-images", path = "main", label = "Imagem principal" }: ImageUploadProps) => {
+const ImageUpload = ({ value, onChange, bucket = "establishment-images", path = "main", label = "Imagem principal", maxSizeMB = MAX_FILE_SIZE_MB }: ImageUploadProps) => {
   const [uploading, setUploading] = useState(false);
+  const [error, setError] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
 
   const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
+    setError("");
+    if (file.size > maxSizeMB * 1024 * 1024) {
+      setError(`Arquivo muito grande. Máximo: ${maxSizeMB}MB`);
+      if (inputRef.current) inputRef.current.value = "";
+      return;
+    }
     setUploading(true);
     const ext = file.name.split(".").pop();
     const fileName = `${path}/${Date.now()}.${ext}`;
-    const { error } = await supabase.storage.from(bucket).upload(fileName, file, { upsert: true });
-    if (!error) {
+    const { error: uploadError } = await supabase.storage.from(bucket).upload(fileName, file, { upsert: true });
+    if (!uploadError) {
       const { data } = supabase.storage.from(bucket).getPublicUrl(fileName);
       onChange(data.publicUrl);
     }
@@ -47,6 +57,8 @@ const ImageUpload = ({ value, onChange, bucket = "establishment-images", path = 
         </Button>
       )}
       <input ref={inputRef} type="file" accept="image/*" className="hidden" onChange={handleUpload} />
+      {error && <p className="text-xs text-destructive mt-1">{error}</p>}
+      <p className="text-xs text-muted-foreground mt-1">Máximo: {maxSizeMB}MB</p>
     </div>
   );
 };
