@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { Instagram, Mail, Phone } from "lucide-react";
+import logoFull from "@/assets/logo-laa-full.png";
 
 const Footer = () => {
   return (
@@ -8,13 +9,9 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Brand */}
           <div className="md:col-span-1">
-            <div className="flex items-center gap-1 mb-4">
-              <span className="text-2xl font-serif font-bold text-primary">LAA</span>
-              <div className="leading-tight">
-                <span className="block text-xs font-semibold tracking-wider text-background/80">TURISMO &</span>
-                <span className="block text-xs font-semibold tracking-wider text-secondary">HOSPITALIDADE</span>
-              </div>
-            </div>
+            <Link to="/" className="inline-block mb-4">
+              <img src={logoFull} alt="LAA Turismo & Hospitalidade" className="h-24 w-auto brightness-110" />
+            </Link>
             <p className="text-sm text-background/60 leading-relaxed">
               Seu guia completo de turismo e lazer no interior paulista.
             </p>
