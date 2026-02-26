@@ -28,12 +28,12 @@ const CategoryGrid = () => {
             <Link
               key={cat.key}
               to={`/explorar?cat=${cat.key}`}
-              className={`group flex flex-col items-center justify-center p-6 rounded-xl bg-gradient-to-br ${cat.color} border border-border/50 hover:border-primary/30 hover:shadow-card-hover transition-all duration-300`}
+              className="group flex flex-col items-center justify-center p-6 rounded-xl bg-card border border-border/50 shadow-card hover:shadow-card-hover hover:border-primary/30 transition-all duration-300"
             >
               <span className="text-3xl mb-2 group-hover:scale-110 transition-transform">
                 {categoryIcons[cat.key]}
               </span>
-              <span className="text-sm font-semibold text-foreground/80 group-hover:text-primary transition-colors">
+              <span className="text-sm font-semibold text-foreground/80 group-hover:text-primary transition-colors text-center">
                 {categoryLabels[cat.key]}
               </span>
             </Link>
