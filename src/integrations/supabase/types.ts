@@ -81,8 +81,10 @@ export type Database = {
         Row: {
           created_at: string
           description: string | null
+          display_order: number
           id: string
           image_url: string | null
+          is_featured: boolean
           name: string
           population: string | null
           region: string | null
@@ -93,8 +95,10 @@ export type Database = {
         Insert: {
           created_at?: string
           description?: string | null
+          display_order?: number
           id?: string
           image_url?: string | null
+          is_featured?: boolean
           name: string
           population?: string | null
           region?: string | null
@@ -105,8 +109,10 @@ export type Database = {
         Update: {
           created_at?: string
           description?: string | null
+          display_order?: number
           id?: string
           image_url?: string | null
+          is_featured?: boolean
           name?: string
           population?: string | null
           region?: string | null
@@ -155,9 +161,11 @@ export type Database = {
           created_at: string
           description: string | null
           details: Json | null
+          display_order: number
           id: string
           image_url: string | null
           is_active: boolean
+          is_featured: boolean
           latitude: number | null
           longitude: number | null
           name: string
@@ -177,9 +185,11 @@ export type Database = {
           created_at?: string
           description?: string | null
           details?: Json | null
+          display_order?: number
           id?: string
           image_url?: string | null
           is_active?: boolean
+          is_featured?: boolean
           latitude?: number | null
           longitude?: number | null
           name: string
@@ -199,9 +209,11 @@ export type Database = {
           created_at?: string
           description?: string | null
           details?: Json | null
+          display_order?: number
           id?: string
           image_url?: string | null
           is_active?: boolean
+          is_featured?: boolean
           latitude?: number | null
           longitude?: number | null
           name?: string
@@ -235,12 +247,14 @@ export type Database = {
           city_id: string | null
           created_at: string
           description: string | null
+          display_order: number
           end_date: string | null
           establishment_id: string | null
           event_type: string | null
           id: string
           image_url: string | null
           is_active: boolean
+          is_featured: boolean
           name: string
           start_date: string | null
           updated_at: string
@@ -249,12 +263,14 @@ export type Database = {
           city_id?: string | null
           created_at?: string
           description?: string | null
+          display_order?: number
           end_date?: string | null
           establishment_id?: string | null
           event_type?: string | null
           id?: string
           image_url?: string | null
           is_active?: boolean
+          is_featured?: boolean
           name: string
           start_date?: string | null
           updated_at?: string
@@ -263,12 +279,14 @@ export type Database = {
           city_id?: string | null
           created_at?: string
           description?: string | null
+          display_order?: number
           end_date?: string | null
           establishment_id?: string | null
           event_type?: string | null
           id?: string
           image_url?: string | null
           is_active?: boolean
+          is_featured?: boolean
           name?: string
           start_date?: string | null
           updated_at?: string
