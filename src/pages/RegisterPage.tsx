@@ -31,7 +31,7 @@ const RegisterPage = () => {
       toast({ title: "Erro ao cadastrar", description: error.message, variant: "destructive" });
     } else {
       toast({ title: "Conta criada!", description: "Verifique seu e-mail para confirmar." });
-      navigate("/login");
+      navigate("/");
     }
   };
 
@@ -41,7 +41,7 @@ const RegisterPage = () => {
         <div className="text-center mb-8">
           <Link to="/"><img src={logoLaa} alt="LAA" className="h-16 mx-auto mb-4" /></Link>
           <h1 className="text-2xl font-serif text-foreground">Criar Conta</h1>
-          <p className="text-sm text-muted-foreground mt-1">Cadastre-se para acessar o painel</p>
+          <p className="text-sm text-muted-foreground mt-1">Crie sua conta para salvar favoritos e mais</p>
         </div>
 
         <form onSubmit={handleRegister} className="bg-card border border-border rounded-2xl p-8 shadow-card space-y-5">

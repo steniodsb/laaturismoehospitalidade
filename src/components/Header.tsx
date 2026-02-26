@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
-import { Menu, X, Search, ChevronDown, User } from "lucide-react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Menu, X, Search, ChevronDown, User, Heart, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { categoryLabels, categoryIcons, type EstablishmentCategory } from "@/data/mockData";
 import { useAuth } from "@/hooks/useAuth";
@@ -15,13 +15,25 @@ const Header = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [catOpen, setCatOpen] = useState(false);
   const location = useLocation();
-  const { user } = useAuth();
+  const navigate = useNavigate();
+  const { user, isAdmin, signOut } = useAuth();
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const userMenuRef = useRef<HTMLDivElement>(null);
+  const [userMenuOpen, setUserMenuOpen] = useState(false);
+
+  const handleSignOut = async () => {
+    await signOut();
+    setUserMenuOpen(false);
+    navigate("/");
+  };
 
   useEffect(() => {
     const handler = (e: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
         setCatOpen(false);
+      }
+      if (userMenuRef.current && !userMenuRef.current.contains(e.target as Node)) {
+        setUserMenuOpen(false);
       }
     };
     document.addEventListener("mousedown", handler);
@@ -108,7 +120,6 @@ const Header = () => {
           </a>
         </nav>
 
-        {/* Desktop Actions */}
         <div className="hidden md:flex items-center gap-3">
           <Link to="/explorar">
             <Button variant="ghost" size="icon" className="text-foreground/70">
@@ -116,11 +127,45 @@ const Header = () => {
             </Button>
           </Link>
           {user ? (
-            <Link to="/admin">
-              <Button variant="default" size="sm" className="gap-2">
-                <User className="h-4 w-4" /> Painel
-              </Button>
-            </Link>
+            <div ref={userMenuRef} className="relative">
+              <button
+                onClick={() => setUserMenuOpen(!userMenuOpen)}
+                className="flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium text-foreground/70 hover:text-foreground hover:bg-muted transition-colors"
+              >
+                <div className="h-7 w-7 rounded-full bg-primary/10 flex items-center justify-center">
+                  <User className="h-4 w-4 text-primary" />
+                </div>
+              </button>
+              {userMenuOpen && (
+                <div className="absolute right-0 top-full mt-1 w-48 bg-card border border-border rounded-xl shadow-lg z-50 py-2 animate-fade-in">
+                  <p className="px-4 py-2 text-xs text-muted-foreground truncate border-b border-border mb-1">{user.email}</p>
+                  {isAdmin && (
+                    <Link
+                      to="/paineladmin"
+                      onClick={() => setUserMenuOpen(false)}
+                      className="block px-4 py-2.5 text-sm font-medium text-foreground/70 hover:bg-muted hover:text-foreground transition-colors"
+                    >
+                      🛡️ Painel Admin
+                    </Link>
+                  )}
+                  <Link
+                    to="/favoritos"
+                    onClick={() => setUserMenuOpen(false)}
+                    className="flex items-center gap-2 px-4 py-2.5 text-sm font-medium text-foreground/70 hover:bg-muted hover:text-foreground transition-colors"
+                  >
+                    <Heart className="h-4 w-4" /> Favoritos
+                  </Link>
+                  <div className="border-t border-border mt-1 pt-1">
+                    <button
+                      onClick={handleSignOut}
+                      className="flex items-center gap-2 px-4 py-2.5 text-sm font-medium text-destructive hover:bg-destructive/10 transition-colors w-full text-left"
+                    >
+                      <LogOut className="h-4 w-4" /> Sair
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
           ) : (
             <Link to="/login">
               <Button variant="default" size="sm" className="gap-2">
@@ -184,11 +229,21 @@ const Header = () => {
               Revista
             </a>
 
-            <div className="pt-2 border-t border-border mt-2">
+            <div className="pt-2 border-t border-border mt-2 space-y-2">
               {user ? (
-                <Link to="/admin" onClick={() => setMobileOpen(false)}>
-                  <Button className="w-full gap-2"><User className="h-4 w-4" /> Painel Admin</Button>
-                </Link>
+                <>
+                  {isAdmin && (
+                    <Link to="/paineladmin" onClick={() => setMobileOpen(false)}>
+                      <Button variant="outline" className="w-full gap-2">🛡️ Painel Admin</Button>
+                    </Link>
+                  )}
+                  <button
+                    onClick={() => { handleSignOut(); setMobileOpen(false); }}
+                    className="flex items-center justify-center gap-2 w-full px-4 py-2 rounded-lg text-sm font-medium text-destructive hover:bg-destructive/10 transition-colors"
+                  >
+                    <LogOut className="h-4 w-4" /> Sair
+                  </button>
+                </>
               ) : (
                 <Link to="/login" onClick={() => setMobileOpen(false)}>
                   <Button className="w-full gap-2"><User className="h-4 w-4" /> Entrar</Button>
