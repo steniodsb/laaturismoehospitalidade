@@ -15,12 +15,13 @@ interface FormModalProps {
   onSubmit: (e: React.FormEvent) => void;
   loading?: boolean;
   children: React.ReactNode;
+  wide?: boolean;
 }
 
-const FormModal = ({ open, onClose, title, onSubmit, loading, children }: FormModalProps) => {
+const FormModal = ({ open, onClose, title, onSubmit, loading, children, wide }: FormModalProps) => {
   return (
     <Dialog open={open} onOpenChange={onClose}>
-      <DialogContent className="max-w-lg max-h-[90vh] overflow-y-auto">
+      <DialogContent className={`${wide ? "max-w-2xl" : "max-w-lg"} max-h-[90vh] overflow-y-auto`}>
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>
           <DialogDescription>Preencha os campos abaixo</DialogDescription>
