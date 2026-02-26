@@ -98,6 +98,14 @@ const Header = () => {
           >
             Eventos
           </Link>
+          <a
+            href="https://heyzine.com/flip-book/1b00f7baf8.html"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="px-4 py-2 rounded-lg text-sm font-medium transition-colors text-foreground/70 hover:text-foreground hover:bg-muted"
+          >
+            Revista
+          </a>
         </nav>
 
         {/* Desktop Actions */}
@@ -172,6 +180,9 @@ const Header = () => {
             <Link to="/eventos" onClick={() => setMobileOpen(false)} className="px-4 py-3 rounded-lg text-sm font-medium text-foreground/70 hover:bg-muted">
               Eventos
             </Link>
+            <a href="https://heyzine.com/flip-book/1b00f7baf8.html" target="_blank" rel="noopener noreferrer" onClick={() => setMobileOpen(false)} className="px-4 py-3 rounded-lg text-sm font-medium text-foreground/70 hover:bg-muted">
+              Revista
+            </a>
 
             <div className="pt-2 border-t border-border mt-2">
               {user ? (
