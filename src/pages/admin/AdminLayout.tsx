@@ -9,13 +9,13 @@ import { useState } from "react";
 import logoLaa from "@/assets/logo-laa.webp";
 
 const navItems = [
-  { to: "/admin", label: "Dashboard", icon: LayoutDashboard, exact: true },
-  { to: "/admin/banners", label: "Banners", icon: Image },
-  { to: "/admin/estabelecimentos", label: "Estabelecimentos", icon: Building2 },
-  { to: "/admin/cidades", label: "Cidades", icon: MapPin },
-  { to: "/admin/categorias", label: "Categorias", icon: Tag },
-  { to: "/admin/tags", label: "Tags", icon: Tags },
-  { to: "/admin/eventos", label: "Eventos", icon: Calendar },
+  { to: "/paineladmin", label: "Dashboard", icon: LayoutDashboard, exact: true },
+  { to: "/paineladmin/banners", label: "Banners", icon: Image },
+  { to: "/paineladmin/estabelecimentos", label: "Estabelecimentos", icon: Building2 },
+  { to: "/paineladmin/cidades", label: "Cidades", icon: MapPin },
+  { to: "/paineladmin/categorias", label: "Categorias", icon: Tag },
+  { to: "/paineladmin/tags", label: "Tags", icon: Tags },
+  { to: "/paineladmin/eventos", label: "Eventos", icon: Calendar },
 ];
 
 const AdminLayout = () => {
@@ -26,7 +26,7 @@ const AdminLayout = () => {
 
   const handleSignOut = async () => {
     await signOut();
-    navigate("/login");
+    navigate("/paineladmin/login");
   };
 
   const isActive = (path: string, exact?: boolean) =>

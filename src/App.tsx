@@ -17,6 +17,7 @@ import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import ForgotPasswordPage from "./pages/ForgotPasswordPage";
 import ResetPasswordPage from "./pages/ResetPasswordPage";
+import AdminLoginPage from "./pages/AdminLoginPage";
 import AdminLayout from "./pages/admin/AdminLayout";
 import DashboardPage from "./pages/admin/DashboardPage";
 import EstablishmentsAdminPage from "./pages/admin/EstablishmentsAdminPage";
@@ -31,8 +32,8 @@ const queryClient = new QueryClient();
 
 const AppContent = () => {
   const location = useLocation();
-  const isAdmin = location.pathname.startsWith("/admin");
-  const isAuth = ["/login", "/cadastro", "/esqueci-senha", "/reset-password"].includes(location.pathname);
+  const isAdmin = location.pathname.startsWith("/paineladmin");
+  const isAuth = ["/login", "/cadastro", "/esqueci-senha", "/reset-password", "/paineladmin/login"].includes(location.pathname);
   const hideChrome = isAdmin || isAuth;
 
   return (
@@ -49,7 +50,8 @@ const AppContent = () => {
         <Route path="/cadastro" element={<RegisterPage />} />
         <Route path="/esqueci-senha" element={<ForgotPasswordPage />} />
         <Route path="/reset-password" element={<ResetPasswordPage />} />
-        <Route path="/admin" element={<ProtectedRoute><AdminLayout /></ProtectedRoute>}>
+        <Route path="/paineladmin/login" element={<AdminLoginPage />} />
+        <Route path="/paineladmin" element={<ProtectedRoute><AdminLayout /></ProtectedRoute>}>
           <Route index element={<DashboardPage />} />
           <Route path="estabelecimentos" element={<EstablishmentsAdminPage />} />
           <Route path="cidades" element={<CitiesAdminPage />} />
