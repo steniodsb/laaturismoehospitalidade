@@ -1,19 +1,29 @@
 import { Link } from "react-router-dom";
-import { type EstablishmentCategory, categoryLabels, categoryIcons } from "@/data/mockData";
+import { useEffect, useState } from "react";
+import { supabase } from "@/integrations/supabase/client";
 
-const categories: { key: EstablishmentCategory; color: string }[] = [
-  { key: "hospedagem", color: "from-primary/20 to-primary/5" },
-  { key: "gastronomia", color: "from-secondary/20 to-secondary/5" },
-  { key: "lazer", color: "from-primary/15 to-secondary/10" },
-  { key: "cultura", color: "from-secondary/15 to-primary/10" },
-  { key: "artesanato", color: "from-primary/10 to-accent/50" },
-  { key: "comercio", color: "from-secondary/10 to-muted/50" },
-  { key: "emergencia", color: "from-destructive/20 to-destructive/5" },
-  { key: "utilidade_publica", color: "from-primary/10 to-muted/30" },
-  { key: "servicos", color: "from-secondary/10 to-accent/30" },
-];
+interface Category {
+  id: string;
+  name: string;
+  slug: string;
+  icon: string | null;
+}
 
 const CategoryGrid = () => {
+  const [categories, setCategories] = useState<Category[]>([]);
+
+  useEffect(() => {
+    supabase
+      .from("categories")
+      .select("id, name, slug, icon")
+      .order("name")
+      .then(({ data }) => {
+        if (data) setCategories(data);
+      });
+  }, []);
+
+  if (categories.length === 0) return null;
+
   return (
     <section className="py-16 md:py-20">
       <div className="container">
@@ -26,15 +36,15 @@ const CategoryGrid = () => {
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 xl:grid-cols-9 gap-4">
           {categories.map((cat) => (
             <Link
-              key={cat.key}
-              to={`/explorar?cat=${cat.key}`}
+              key={cat.id}
+              to={`/explorar?cat=${cat.slug}`}
               className="group flex flex-col items-center justify-center p-6 rounded-xl bg-card border border-border/50 shadow-card hover:shadow-card-hover hover:border-primary/30 transition-all duration-300"
             >
               <span className="text-3xl mb-2 group-hover:scale-110 transition-transform">
-                {categoryIcons[cat.key]}
+                {cat.icon || "📌"}
               </span>
               <span className="text-sm font-semibold text-foreground/80 group-hover:text-primary transition-colors text-center">
-                {categoryLabels[cat.key]}
+                {cat.name}
               </span>
             </Link>
           ))}
