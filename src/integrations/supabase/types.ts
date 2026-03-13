@@ -87,6 +87,7 @@ export type Database = {
           is_featured: boolean
           name: string
           population: string | null
+          presentation_video_url: string | null
           region: string | null
           short_description: string | null
           slug: string
@@ -101,6 +102,7 @@ export type Database = {
           is_featured?: boolean
           name: string
           population?: string | null
+          presentation_video_url?: string | null
           region?: string | null
           short_description?: string | null
           slug: string
@@ -115,6 +117,7 @@ export type Database = {
           is_featured?: boolean
           name?: string
           population?: string | null
+          presentation_video_url?: string | null
           region?: string | null
           short_description?: string | null
           slug?: string

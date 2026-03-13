@@ -29,7 +29,7 @@ const columns: Column<CityItem>[] = [
   { key: "display_order", label: "Ordem" },
 ];
 
-const empty = { name: "", slug: "", region: "", population: "", short_description: "", description: "", image_url: "", is_featured: false, display_order: "0" };
+const empty = { name: "", slug: "", region: "", population: "", short_description: "", description: "", image_url: "", presentation_video_url: "", is_featured: false, display_order: "0" };
 
 const CitiesAdminPage = () => {
   const [data, setData] = useState<CityItem[]>([]);
@@ -62,6 +62,7 @@ const CitiesAdminPage = () => {
         short_description: full.short_description || "",
         description: full.description || "",
         image_url: full.image_url || "",
+        presentation_video_url: full.presentation_video_url || "",
         is_featured: full.is_featured || false,
         display_order: String(full.display_order || 0),
       });
@@ -112,6 +113,7 @@ const CitiesAdminPage = () => {
         <div><label className="text-sm font-medium text-foreground mb-1.5 block">População</label><Input value={form.population} onChange={(e) => set("population", e.target.value)} /></div>
         <div><label className="text-sm font-medium text-foreground mb-1.5 block">Descrição curta</label><Input value={form.short_description} onChange={(e) => set("short_description", e.target.value)} /></div>
         <div><label className="text-sm font-medium text-foreground mb-1.5 block">Descrição</label><Textarea value={form.description} onChange={(e) => set("description", e.target.value)} /></div>
+        <div><label className="text-sm font-medium text-foreground mb-1.5 block">Link de apresentação (vídeo/YouTube)</label><Input value={form.presentation_video_url} onChange={(e) => set("presentation_video_url", e.target.value)} placeholder="https://www.youtube.com/watch?v=..." /></div>
         <ImageUpload value={form.image_url} onChange={(url) => set("image_url", url)} path={`cities/${editing?.id || "new"}`} label="Imagem da cidade" />
         <div className="grid grid-cols-2 gap-3 border-t border-border pt-4">
           <div className="flex items-center gap-2">

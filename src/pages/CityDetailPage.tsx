@@ -1,6 +1,6 @@
 import { useParams, Link } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { MapPin, Users, Calendar, ArrowLeft } from "lucide-react";
+import { MapPin, Users, Calendar, ArrowLeft, Play } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import EstablishmentCard, { type EstablishmentData } from "@/components/EstablishmentCard";
 import EventCard, { type EventData } from "@/components/EventCard";
@@ -15,7 +15,23 @@ interface CityFull {
   description: string | null;
   region: string | null;
   population: string | null;
+  presentation_video_url: string | null;
 }
+
+const getYoutubeEmbedUrl = (url: string): string | null => {
+  try {
+    const u = new URL(url);
+    let videoId: string | null = null;
+    if (u.hostname.includes("youtu.be")) {
+      videoId = u.pathname.slice(1);
+    } else if (u.hostname.includes("youtube.com")) {
+      videoId = u.searchParams.get("v");
+    }
+    return videoId ? `https://www.youtube.com/embed/${videoId}` : null;
+  } catch {
+    return null;
+  }
+};
 
 const CityDetailPage = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -84,6 +100,44 @@ const CityDetailPage = () => {
           </div>
         </section>
       )}
+
+      {city.presentation_video_url && (() => {
+        const embedUrl = getYoutubeEmbedUrl(city.presentation_video_url);
+        return embedUrl ? (
+          <section className="py-10 md:py-14 bg-muted/30">
+            <div className="container max-w-3xl">
+              <h2 className="text-2xl font-serif text-foreground mb-6 flex items-center gap-2">
+                <Play className="h-5 w-5 text-primary" /> Conheça o município
+              </h2>
+              <div className="relative w-full aspect-video rounded-xl overflow-hidden shadow-card">
+                <iframe
+                  src={embedUrl}
+                  title={`Apresentação de ${city.name}`}
+                  className="w-full h-full"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                />
+              </div>
+            </div>
+          </section>
+        ) : (
+          <section className="py-10 md:py-14 bg-muted/30">
+            <div className="container max-w-3xl">
+              <h2 className="text-2xl font-serif text-foreground mb-4 flex items-center gap-2">
+                <Play className="h-5 w-5 text-primary" /> Conheça o município
+              </h2>
+              <a
+                href={city.presentation_video_url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 text-primary font-medium hover:underline"
+              >
+                <Play className="h-4 w-4" /> Assistir apresentação
+              </a>
+            </div>
+          </section>
+        );
+      })()}
 
       {events.length > 0 && (
         <section className="py-10 md:py-14 bg-muted/50">

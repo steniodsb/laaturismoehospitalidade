@@ -26,6 +26,7 @@ import CategoriesAdminPage from "./pages/admin/CategoriesAdminPage";
 import TagsAdminPage from "./pages/admin/TagsAdminPage";
 import EventsAdminPage from "./pages/admin/EventsAdminPage";
 import BannersAdminPage from "./pages/admin/BannersAdminPage";
+import SobrePage from "./pages/SobrePage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -50,6 +51,7 @@ const AppContent = () => {
         <Route path="/cadastro" element={<RegisterPage />} />
         <Route path="/esqueci-senha" element={<ForgotPasswordPage />} />
         <Route path="/reset-password" element={<ResetPasswordPage />} />
+        <Route path="/sobre" element={<SobrePage />} />
         <Route path="/paineladmin/login" element={<AdminLoginPage />} />
         <Route path="/paineladmin" element={<ProtectedRoute><AdminLayout /></ProtectedRoute>}>
           <Route index element={<DashboardPage />} />
