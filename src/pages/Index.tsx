@@ -36,31 +36,13 @@ const Index = () => {
       .from("establishments")
       .select("id, name, image_url, short_description, amenities, rating, category:categories(name, icon, slug), city:cities(name)")
       .eq("is_active", true)
-      .eq("categories.slug", "hospedagem")
+      .eq("is_featured", true)
       .order("display_order")
-      .limit(10)
       .then(({ data }) => {
         if (data) {
-          const filtered = (data as unknown as EstablishmentData[]).filter(
-            (e) => e.category?.slug === "hospedagem"
-          );
-          setHospedagem(filtered);
-        }
-      });
-
-    supabase
-      .from("establishments")
-      .select("id, name, image_url, short_description, amenities, rating, category:categories(name, icon, slug), city:cities(name)")
-      .eq("is_active", true)
-      .eq("categories.slug", "gastronomia")
-      .order("display_order")
-      .limit(10)
-      .then(({ data }) => {
-        if (data) {
-          const filtered = (data as unknown as EstablishmentData[]).filter(
-            (e) => e.category?.slug === "gastronomia"
-          );
-          setGastronomia(filtered);
+          const all = data as unknown as EstablishmentData[];
+          setHospedagem(all.filter((e) => e.category?.slug === "hospedagem"));
+          setGastronomia(all.filter((e) => e.category?.slug === "gastronomia"));
         }
       });
 
