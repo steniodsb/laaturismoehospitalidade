@@ -95,7 +95,7 @@ const AdminLayout = () => {
           <button onClick={() => setSidebarOpen(true)} className="lg:hidden text-muted-foreground">
             <Menu className="h-5 w-5" />
           </button>
-          <h2 className="text-lg font-serif text-foreground">Painel Administrativo</h2>
+          <h2 className="text-lg font-sans font-normal text-foreground">Painel Administrativo</h2>
         </header>
         <main className="flex-1 p-4 lg:p-6">
           <Outlet />

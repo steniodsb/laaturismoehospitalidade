@@ -37,7 +37,7 @@ const AdminLoginPage = () => {
           <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-3 py-1 rounded-full text-xs font-semibold mb-3">
             <ShieldCheck className="h-3.5 w-3.5" /> Acesso Administrativo
           </div>
-          <h1 className="text-2xl font-serif text-foreground">Painel Admin</h1>
+          <h1 className="text-2xl font-sans font-normal text-foreground">Painel Admin</h1>
           <p className="text-sm text-muted-foreground mt-1">Entre com suas credenciais de administrador</p>
         </div>
 

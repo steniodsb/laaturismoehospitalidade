@@ -53,7 +53,7 @@ const ExplorePage = () => {
     <div className="min-h-screen">
       <section className="bg-gradient-to-br from-primary/5 via-secondary/5 to-background py-12 md:py-16">
         <div className="container">
-          <h1 className="text-4xl md:text-5xl font-serif text-foreground mb-4 text-center">Explorar</h1>
+          <h1 className="text-4xl md:text-5xl font-sans font-normal text-foreground mb-4 text-center">Explorar</h1>
           <p className="text-muted-foreground text-center mb-8 max-w-lg mx-auto">
             Encontre os melhores hotéis, restaurantes e atrações do interior paulista
           </p>

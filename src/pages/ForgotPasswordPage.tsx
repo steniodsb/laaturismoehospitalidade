@@ -32,7 +32,7 @@ const ForgotPasswordPage = () => {
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
           <Link to="/"><img src={logoLaa} alt="LAA" className="h-16 mx-auto mb-4" /></Link>
-          <h1 className="text-2xl font-serif text-foreground">Recuperar Senha</h1>
+          <h1 className="text-2xl font-sans font-normal text-foreground">Recuperar Senha</h1>
         </div>
 
         {sent ? (

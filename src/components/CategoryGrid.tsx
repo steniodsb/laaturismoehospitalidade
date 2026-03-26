@@ -28,7 +28,7 @@ const CategoryGrid = () => {
     <section className="py-16 md:py-20">
       <div className="container">
         <div className="text-center mb-10">
-          <h2 className="text-3xl md:text-4xl font-serif text-foreground mb-3">Explore por Categoria</h2>
+          <h2 className="text-3xl md:text-4xl font-sans font-normal text-foreground mb-3">Explore por Categoria</h2>
           <p className="text-muted-foreground max-w-lg mx-auto">
             Encontre exatamente o que você procura no interior paulista
           </p>

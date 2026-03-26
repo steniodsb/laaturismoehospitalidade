@@ -67,7 +67,7 @@ const CityDetailPage = () => {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
-          <h1 className="text-3xl font-serif text-foreground mb-4">Cidade não encontrada</h1>
+          <h1 className="text-3xl font-sans font-normal text-foreground mb-4">Cidade não encontrada</h1>
           <Link to="/cidades" className="text-primary font-medium hover:underline">← Voltar para cidades</Link>
         </div>
       </div>
@@ -84,7 +84,7 @@ const CityDetailPage = () => {
             <Link to="/cidades" className="inline-flex items-center gap-1 text-sm text-background/70 hover:text-background mb-3 transition-colors">
               <ArrowLeft className="h-4 w-4" /> Todas as cidades
             </Link>
-            <h1 className="text-4xl md:text-5xl font-serif text-background mb-2">{city.name}</h1>
+            <h1 className="text-4xl md:text-5xl font-sans font-normal text-background mb-2">{city.name}</h1>
             <div className="flex flex-wrap items-center gap-4 text-background/70 text-sm">
               {city.region && <span className="flex items-center gap-1"><MapPin className="h-4 w-4 text-primary" /> {city.region}</span>}
               {city.population && <span className="flex items-center gap-1"><Users className="h-4 w-4 text-secondary" /> {city.population} hab.</span>}
@@ -106,7 +106,7 @@ const CityDetailPage = () => {
         return embedUrl ? (
           <section className="py-10 md:py-14 bg-muted/30">
             <div className="container max-w-3xl">
-              <h2 className="text-2xl font-serif text-foreground mb-6 flex items-center gap-2">
+              <h2 className="text-2xl font-sans font-normal text-foreground mb-6 flex items-center gap-2">
                 <Play className="h-5 w-5 text-primary" /> Conheça o município
               </h2>
               <div className="relative w-full aspect-video rounded-xl overflow-hidden shadow-card">
@@ -123,7 +123,7 @@ const CityDetailPage = () => {
         ) : (
           <section className="py-10 md:py-14 bg-muted/30">
             <div className="container max-w-3xl">
-              <h2 className="text-2xl font-serif text-foreground mb-4 flex items-center gap-2">
+              <h2 className="text-2xl font-sans font-normal text-foreground mb-4 flex items-center gap-2">
                 <Play className="h-5 w-5 text-primary" /> Conheça o município
               </h2>
               <a

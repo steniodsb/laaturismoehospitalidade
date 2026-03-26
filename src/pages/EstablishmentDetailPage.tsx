@@ -51,7 +51,7 @@ const EstablishmentDetailPage = () => {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
-          <h1 className="text-3xl font-serif text-foreground mb-4">Estabelecimento não encontrado</h1>
+          <h1 className="text-3xl font-sans font-normal text-foreground mb-4">Estabelecimento não encontrado</h1>
           <Link to="/explorar" className="text-primary font-medium hover:underline">← Voltar para explorar</Link>
         </div>
       </div>
@@ -99,7 +99,7 @@ const EstablishmentDetailPage = () => {
                 </span>
               </div>
             )}
-            <h1 className="text-3xl md:text-4xl font-serif text-background mb-2">{est.name}</h1>
+            <h1 className="text-3xl md:text-4xl font-sans font-normal text-background mb-2">{est.name}</h1>
             <div className="flex flex-wrap items-center gap-4 text-background/70 text-sm">
               {cityName && <span className="flex items-center gap-1"><MapPin className="h-4 w-4 text-primary" /> {cityName}</span>}
               {est.rating && <span className="flex items-center gap-1"><Star className="h-4 w-4 text-primary fill-primary" /> {est.rating}</span>}
@@ -132,14 +132,14 @@ const EstablishmentDetailPage = () => {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
             <div className="lg:col-span-2 space-y-8">
               <div>
-                <h2 className="text-2xl font-serif text-foreground mb-4">Sobre</h2>
+                <h2 className="text-2xl font-sans font-normal text-foreground mb-4">Sobre</h2>
                 <p className="text-muted-foreground leading-relaxed">{est.description}</p>
               </div>
 
               {/* Hospedagem details */}
               {isHospedagem && (
                 <div className="bg-muted/30 rounded-xl border border-border p-6">
-                  <h3 className="text-xl font-serif text-foreground mb-5">Detalhes da Hospedagem</h3>
+                  <h3 className="text-xl font-sans font-normal text-foreground mb-5">Detalhes da Hospedagem</h3>
                   <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
                     {d.checkIn && <DetailItem icon={<Clock className="h-5 w-5 text-primary mt-0.5" />} label="Check-in" value={d.checkIn} />}
                     {d.checkOut && <DetailItem icon={<Clock className="h-5 w-5 text-secondary mt-0.5" />} label="Check-out" value={d.checkOut} />}
@@ -170,7 +170,7 @@ const EstablishmentDetailPage = () => {
               {/* Gastronomia details */}
               {isGastronomia && (
                 <div className="bg-muted/30 rounded-xl border border-border p-6">
-                  <h3 className="text-xl font-serif text-foreground mb-5">Detalhes do Restaurante</h3>
+                  <h3 className="text-xl font-sans font-normal text-foreground mb-5">Detalhes do Restaurante</h3>
                   <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
                     {d.cuisineType && <DetailItem icon={<UtensilsCrossed className="h-5 w-5 text-primary mt-0.5" />} label="Cozinha" value={d.cuisineType} />}
                     {d.openingHours && <DetailItem icon={<Clock className="h-5 w-5 text-primary mt-0.5" />} label="Horário" value={d.openingHours} />}
@@ -206,7 +206,7 @@ const EstablishmentDetailPage = () => {
 
               {amenities.length > 0 && (
                 <div>
-                  <h3 className="text-xl font-serif text-foreground mb-4">Comodidades</h3>
+                  <h3 className="text-xl font-sans font-normal text-foreground mb-4">Comodidades</h3>
                   <div className="flex flex-wrap gap-2">
                     {amenities.map((a) => (
                       <span key={a} className="inline-flex items-center gap-1.5 bg-muted text-foreground text-sm px-3 py-1.5 rounded-full">{a}</span>
@@ -217,7 +217,7 @@ const EstablishmentDetailPage = () => {
 
               {(est.latitude && est.longitude) && (
                 <div>
-                  <h3 className="text-xl font-serif text-foreground mb-4">Localização</h3>
+                  <h3 className="text-xl font-sans font-normal text-foreground mb-4">Localização</h3>
                   <div className="rounded-xl overflow-hidden border border-border">
                     <iframe title="Localização" width="100%" height="300" style={{ border: 0 }} loading="lazy" src={`https://www.google.com/maps?q=${est.latitude},${est.longitude}&z=15&output=embed`} />
                   </div>

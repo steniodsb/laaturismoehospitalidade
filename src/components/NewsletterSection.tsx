@@ -20,7 +20,7 @@ const NewsletterSection = () => {
           <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-primary/10 mb-5">
             <Mail className="h-6 w-6 text-primary" />
           </div>
-          <h2 className="text-3xl font-serif text-foreground mb-3">Fique por Dentro</h2>
+          <h2 className="text-3xl font-sans font-normal text-foreground mb-3">Fique por Dentro</h2>
           <p className="text-muted-foreground mb-8">
             Receba as melhores dicas de turismo e eventos do interior paulista diretamente no seu e-mail.
           </p>

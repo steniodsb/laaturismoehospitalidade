@@ -76,7 +76,7 @@ const HeroSection = () => {
             <span className="text-sm font-medium text-background/80 tracking-wide">Interior Paulista</span>
           </div>
 
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-serif text-background leading-tight mb-4 animate-fade-in-up">
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-sans font-normal text-background leading-tight mb-4 animate-fade-in-up">
             {slides[currentSlide]?.title}
           </h1>
 

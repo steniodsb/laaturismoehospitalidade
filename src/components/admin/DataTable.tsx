@@ -40,7 +40,7 @@ export function DataTable<T extends { id: string; [key: string]: any }>({
   return (
     <div>
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
-        <h1 className="text-2xl font-serif text-foreground">{title}</h1>
+        <h1 className="text-2xl font-sans font-normal text-foreground">{title}</h1>
         <Button onClick={onAdd} className="gap-2">
           <Plus className="h-4 w-4" /> Adicionar
         </Button>

@@ -37,7 +37,7 @@ const ResetPasswordPage = () => {
     return (
       <div className="min-h-screen flex items-center justify-center px-4">
         <div className="text-center">
-          <h1 className="text-2xl font-serif text-foreground mb-4">Link inválido</h1>
+          <h1 className="text-2xl font-sans font-normal text-foreground mb-4">Link inválido</h1>
           <p className="text-muted-foreground">Use o link enviado por e-mail para redefinir a senha.</p>
         </div>
       </div>
@@ -49,7 +49,7 @@ const ResetPasswordPage = () => {
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
           <img src={logoLaa} alt="LAA" className="h-16 mx-auto mb-4" />
-          <h1 className="text-2xl font-serif text-foreground">Nova Senha</h1>
+          <h1 className="text-2xl font-sans font-normal text-foreground">Nova Senha</h1>
         </div>
         <form onSubmit={handleUpdate} className="bg-card border border-border rounded-2xl p-8 shadow-card space-y-5">
           <div>

@@ -21,7 +21,7 @@ const SobrePage = () => {
       {/* Hero */}
       <section className="bg-gradient-to-br from-primary/5 via-secondary/5 to-background py-16 md:py-24">
         <div className="container text-center max-w-3xl">
-          <h1 className="text-4xl md:text-5xl font-serif text-foreground mb-6">Quem Somos</h1>
+          <h1 className="text-4xl md:text-5xl font-sans font-normal text-foreground mb-6">Quem Somos</h1>
           <p className="text-lg text-muted-foreground leading-relaxed">
             A <strong className="text-foreground">LAA Turismo &amp; Hospitalidade</strong> é uma associação dedicada a
             promover o turismo sustentável e a hospitalidade nas cidades do interior paulista. Conectamos viajantes a
@@ -33,7 +33,7 @@ const SobrePage = () => {
       {/* Vídeo institucional */}
       <section className="py-12 md:py-16 bg-muted/30">
         <div className="container max-w-3xl">
-          <h2 className="text-2xl md:text-3xl font-serif text-foreground mb-6 flex items-center gap-2">
+          <h2 className="text-2xl md:text-3xl font-sans font-normal text-foreground mb-6 flex items-center gap-2">
             <Play className="h-6 w-6 text-primary" /> Vídeo institucional
           </h2>
           <div className="relative w-full aspect-video rounded-xl overflow-hidden shadow-card">
@@ -51,7 +51,7 @@ const SobrePage = () => {
       {/* Galeria de materiais */}
       <section className="py-12 md:py-16">
         <div className="container">
-          <h2 className="text-2xl md:text-3xl font-serif text-foreground mb-2">Nosso trabalho</h2>
+          <h2 className="text-2xl md:text-3xl font-sans font-normal text-foreground mb-2">Nosso trabalho</h2>
           <p className="text-muted-foreground mb-8">Materiais de divulgação produzidos pela LAA Turismo &amp; Hospitalidade</p>
 
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2 md:gap-3">

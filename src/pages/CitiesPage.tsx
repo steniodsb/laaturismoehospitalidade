@@ -17,7 +17,7 @@ const CitiesPage = () => {
     <div className="min-h-screen">
       <section className="bg-gradient-to-br from-primary/5 via-secondary/5 to-background py-16 md:py-20">
         <div className="container text-center">
-          <h1 className="text-4xl md:text-5xl font-serif text-foreground mb-4">Nossas Cidades</h1>
+          <h1 className="text-4xl md:text-5xl font-sans font-normal text-foreground mb-4">Nossas Cidades</h1>
           <p className="text-lg text-muted-foreground max-w-xl mx-auto">
             Conheça as cidades participantes do guia LAA Turismo & Hospitalidade
           </p>

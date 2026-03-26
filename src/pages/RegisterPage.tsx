@@ -40,7 +40,7 @@ const RegisterPage = () => {
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
           <Link to="/"><img src={logoLaa} alt="LAA" className="h-16 mx-auto mb-4" /></Link>
-          <h1 className="text-2xl font-serif text-foreground">Criar Conta</h1>
+          <h1 className="text-2xl font-sans font-normal text-foreground">Criar Conta</h1>
           <p className="text-sm text-muted-foreground mt-1">Crie sua conta para salvar favoritos e mais</p>
         </div>
 

@@ -34,7 +34,7 @@ const LoginPage = () => {
           <Link to="/">
             <img src={logoLaa} alt="LAA" className="h-16 mx-auto mb-4" />
           </Link>
-          <h1 className="text-2xl font-serif text-foreground">Bem-vindo</h1>
+          <h1 className="text-2xl font-sans font-normal text-foreground">Bem-vindo</h1>
           <p className="text-sm text-muted-foreground mt-1">Entre para salvar seus favoritos e muito mais</p>
         </div>
 

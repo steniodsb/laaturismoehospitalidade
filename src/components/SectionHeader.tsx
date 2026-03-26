@@ -12,7 +12,7 @@ const SectionHeader = ({ title, subtitle, linkTo, linkLabel = "Ver todos" }: Sec
   return (
     <div className="flex items-end justify-between mb-8">
       <div>
-        <h2 className="text-2xl md:text-3xl font-serif text-foreground">{title}</h2>
+        <h2 className="text-2xl md:text-3xl font-sans font-normal text-foreground">{title}</h2>
         {subtitle && <p className="text-muted-foreground mt-1">{subtitle}</p>}
       </div>
       {linkTo && (

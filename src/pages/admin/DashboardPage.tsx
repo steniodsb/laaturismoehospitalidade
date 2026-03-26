@@ -37,7 +37,7 @@ const DashboardPage = () => {
 
   return (
     <div>
-      <h1 className="text-2xl font-serif text-foreground mb-6">Dashboard</h1>
+      <h1 className="text-2xl font-sans font-normal text-foreground mb-6">Dashboard</h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <StatCard label="Estabelecimentos" value={stats.establishments} icon={Building2} color="bg-primary/10 text-primary" />
         <StatCard label="Cidades" value={stats.cities} icon={MapPin} color="bg-secondary/10 text-secondary" />
