@@ -50,7 +50,7 @@ const Header = () => {
     <header className="sticky top-0 z-50 bg-card/95 backdrop-blur-md border-b border-border">
       <div className="container flex items-center justify-between h-16 md:h-20">
         <Link to="/" className="flex items-center gap-2">
-          <img src={logoLaa} alt="LAA Turismo & Hospitalidade" className="h-12 md:h-14 w-auto" />
+          <img src={logoLaa} alt="LAA Turismo & Hospitalidade" className="h-16 md:h-[4.5rem] w-auto" />
         </Link>
 
         <nav className="hidden md:flex items-center gap-1">
