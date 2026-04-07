@@ -74,7 +74,7 @@ const Header = () => {
 
           <Link to="/eventos" className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${location.pathname === "/eventos" ? "bg-primary/10 text-primary" : "text-foreground/70 hover:text-foreground hover:bg-muted"}`}>Eventos</Link>
           <Link to="/sobre" className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${location.pathname === "/sobre" ? "bg-primary/10 text-primary" : "text-foreground/70 hover:text-foreground hover:bg-muted"}`}>Sobre</Link>
-          <a href="https://heyzine.com/flip-book/1b00f7baf8.html" target="_blank" rel="noopener noreferrer" className="px-4 py-2 rounded-lg text-sm font-medium transition-colors text-foreground/70 hover:text-foreground hover:bg-muted">Revista</a>
+          <a href="https://heyzine.com/flip-book/981c27f95c.html" target="_blank" rel="noopener noreferrer" className="px-4 py-2 rounded-lg text-sm font-medium transition-colors text-foreground/70 hover:text-foreground hover:bg-muted">Revista</a>
         </nav>
 
         <div className="hidden md:flex items-center gap-3">
@@ -123,7 +123,7 @@ const Header = () => {
             )}
             <Link to="/eventos" onClick={() => setMobileOpen(false)} className="px-4 py-3 rounded-lg text-sm font-medium text-foreground/70 hover:bg-muted">Eventos</Link>
             <Link to="/sobre" onClick={() => setMobileOpen(false)} className="px-4 py-3 rounded-lg text-sm font-medium text-foreground/70 hover:bg-muted">Sobre</Link>
-            <a href="https://heyzine.com/flip-book/1b00f7baf8.html" target="_blank" rel="noopener noreferrer" onClick={() => setMobileOpen(false)} className="px-4 py-3 rounded-lg text-sm font-medium text-foreground/70 hover:bg-muted">Revista</a>
+            <a href="https://heyzine.com/flip-book/981c27f95c.html" target="_blank" rel="noopener noreferrer" onClick={() => setMobileOpen(false)} className="px-4 py-3 rounded-lg text-sm font-medium text-foreground/70 hover:bg-muted">Revista</a>
             <div className="pt-2 border-t border-border mt-2 space-y-2">
               {user ? (
                 <>
