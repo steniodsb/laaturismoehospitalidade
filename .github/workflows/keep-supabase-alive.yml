@@ -1,0 +1,34 @@
+name: Keep Supabase Alive
+
+# Mantém o projeto Supabase (plano free) ativo.
+# O Supabase pausa projetos free após ~7 dias sem atividade.
+# Este workflow faz uma requisição real à API REST a cada 2 dias.
+
+on:
+  schedule:
+    # Às 06:00 UTC (03:00 horário de Brasília) a cada 2 dias.
+    - cron: "0 6 */2 * *"
+  workflow_dispatch: {} # permite rodar manualmente pela aba Actions
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping Supabase REST API
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL || 'https://pyrxvdpuhabnkcvggxbm.supabase.co' }}
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB5cnh2ZHB1aGFibmtjdmdneGJtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE1ODEzNTIsImV4cCI6MjA4NzE1NzM1Mn0.2yVVfyyUqKAeD5GTBXFBjKKbuVOA7jx7MGv7sliZA_4' }}
+        run: |
+          echo "Pingando Supabase em $(date -u)..."
+          STATUS=$(curl -s -o /tmp/resp.txt -w "%{http_code}" \
+            "${SUPABASE_URL}/rest/v1/cities?select=id&limit=1" \
+            -H "apikey: ${SUPABASE_ANON_KEY}" \
+            -H "Authorization: Bearer ${SUPABASE_ANON_KEY}")
+          echo "HTTP status: ${STATUS}"
+          echo "Resposta: $(cat /tmp/resp.txt)"
+          if [ "${STATUS}" -ge 200 ] && [ "${STATUS}" -lt 300 ]; then
+            echo "OK - Supabase respondeu, atividade registrada."
+          else
+            echo "FALHA - Supabase não respondeu com sucesso."
+            exit 1
+          fi
