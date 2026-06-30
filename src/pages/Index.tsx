@@ -60,19 +60,6 @@ const Index = () => {
       <HeroSection />
       <CategoryGrid />
 
-      {events.length > 0 && (
-        <section className="py-12 md:py-16 bg-muted/50">
-          <div className="container">
-            <SectionHeader title="Agenda de Eventos" subtitle="Festivais, festas e comemorações do interior paulista" linkTo="/eventos" linkLabel="Ver todos" />
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-              {events.map((event) => (
-                <EventCard key={event.id} event={event} />
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
-
       {cities.length > 0 && (
         <section className="py-12 md:py-16">
           <div className="container">
@@ -139,6 +126,19 @@ const Index = () => {
               >
                 Ver mais <ChevronRight className="h-4 w-4" />
               </Link>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {events.length > 0 && (
+        <section className="py-12 md:py-16 bg-muted/50">
+          <div className="container">
+            <SectionHeader title="Agenda de Eventos" subtitle="Festivais, festas e comemorações do interior paulista" linkTo="/eventos" linkLabel="Ver todos" />
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+              {events.map((event) => (
+                <EventCard key={event.id} event={event} />
+              ))}
             </div>
           </div>
         </section>
