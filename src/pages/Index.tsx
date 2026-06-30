@@ -49,10 +49,9 @@ const Index = () => {
     supabase
       .from("events")
       .select("id, name, image_url, description, start_date, end_date, event_type, city:cities(name)")
-      .eq("is_featured", true)
       .eq("is_active", true)
-      .order("display_order")
-      .limit(3)
+      .order("start_date")
+      .limit(6)
       .then(({ data }) => { if (data) setEvents(data as unknown as EventData[]); });
   }, []);
 
