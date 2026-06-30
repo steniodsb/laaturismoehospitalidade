@@ -2,7 +2,7 @@ import { Outlet, Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import {
   LayoutDashboard, Building2, MapPin, Tag, Tags, Calendar,
-  Users, LogOut, Menu, X, ChevronLeft, Image
+  Users, LogOut, Menu, X, ChevronLeft, Image, Images, Map
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
@@ -16,6 +16,8 @@ const navItems = [
   { to: "/paineladmin/categorias", label: "Categorias", icon: Tag },
   { to: "/paineladmin/tags", label: "Tags", icon: Tags },
   { to: "/paineladmin/eventos", label: "Eventos", icon: Calendar },
+  { to: "/paineladmin/sobre-galeria", label: "Sobre — Galeria", icon: Images },
+  { to: "/paineladmin/regioes", label: "Regiões Turísticas", icon: Map },
 ];
 
 const AdminLayout = () => {

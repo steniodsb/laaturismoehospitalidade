@@ -1,14 +1,57 @@
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { X, ChevronLeft, ChevronRight, Play } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
 
-const totalFotos = 74;
-const fotos = Array.from({ length: totalFotos }, (_, i) => `/portfolio/foto-${String(i + 1).padStart(2, "0")}.jpg`);
+interface Photo {
+  id: string;
+  image_url: string;
+  caption: string | null;
+  display_order: number;
+}
+
+interface Album {
+  id: string;
+  title: string;
+  event_date: string | null;
+  display_order: number;
+  about_album_photos: Photo[];
+}
+
+const formatDate = (date: string | null) => {
+  if (!date) return "";
+  return new Date(date + "T00:00:00").toLocaleDateString("pt-BR", { day: "2-digit", month: "long", year: "numeric" });
+};
 
 const SobrePage = () => {
+  const [albums, setAlbums] = useState<Album[]>([]);
   const [lightbox, setLightbox] = useState<number | null>(null);
 
-  const prev = () => setLightbox((i) => (i !== null ? (i - 1 + totalFotos) % totalFotos : null));
-  const next = () => setLightbox((i) => (i !== null ? (i + 1) % totalFotos : null));
+  useEffect(() => {
+    supabase
+      .from("about_albums")
+      .select("id, title, event_date, display_order, about_album_photos(id, image_url, caption, display_order)")
+      .eq("is_active", true)
+      .order("event_date", { ascending: false, nullsFirst: false })
+      .order("display_order")
+      .then(({ data }) => {
+        if (data) {
+          const sorted = (data as unknown as Album[])
+            .map((a) => ({
+              ...a,
+              about_album_photos: [...(a.about_album_photos || [])].sort((x, y) => x.display_order - y.display_order),
+            }))
+            .filter((a) => a.about_album_photos.length > 0);
+          setAlbums(sorted);
+        }
+      });
+  }, []);
+
+  // Lista achatada de todas as fotos (na ordem em que aparecem) para o lightbox navegar.
+  const flatPhotos = useMemo(() => albums.flatMap((a) => a.about_album_photos), [albums]);
+  const total = flatPhotos.length;
+
+  const prev = () => setLightbox((i) => (i !== null ? (i - 1 + total) % total : null));
+  const next = () => setLightbox((i) => (i !== null ? (i + 1) % total : null));
 
   const handleKey = (e: React.KeyboardEvent) => {
     if (e.key === "ArrowLeft") prev();
@@ -48,34 +91,53 @@ const SobrePage = () => {
         </div>
       </section>
 
-      {/* Galeria de materiais */}
+      {/* Galeria por evento */}
       <section className="py-12 md:py-16">
         <div className="container">
           <h2 className="text-2xl md:text-3xl font-sans font-normal text-foreground mb-2">Nosso trabalho</h2>
-          <p className="text-muted-foreground mb-8">Materiais de divulgação produzidos pela LAA Turismo &amp; Hospitalidade</p>
+          <p className="text-muted-foreground mb-10">Materiais de divulgação e participações da LAA Turismo &amp; Hospitalidade, organizados por evento</p>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2 md:gap-3">
-            {fotos.map((src, idx) => (
-              <button
-                key={idx}
-                onClick={() => setLightbox(idx)}
-                className="group relative aspect-square overflow-hidden rounded-lg shadow-sm hover:shadow-card-hover transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-primary"
-              >
-                <img
-                  src={src}
-                  alt={`Material de divulgação ${idx + 1}`}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                  loading="lazy"
-                />
-                <div className="absolute inset-0 bg-foreground/0 group-hover:bg-foreground/20 transition-colors duration-300 rounded-lg" />
-              </button>
-            ))}
+          <div className="space-y-12">
+            {albums.map((album, albumIdx) => {
+              // índice global da primeira foto deste álbum na lista achatada
+              const offset = albums.slice(0, albumIdx).reduce((sum, a) => sum + a.about_album_photos.length, 0);
+              const dateLabel = formatDate(album.event_date);
+              return (
+                <div key={album.id}>
+                  <div className="flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-3 mb-5 pb-2 border-b border-border">
+                    <h3 className="text-xl md:text-2xl font-sans font-normal text-foreground">{album.title}</h3>
+                    {dateLabel && <span className="text-sm font-medium text-primary capitalize">{dateLabel}</span>}
+                  </div>
+                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2 md:gap-3">
+                    {album.about_album_photos.map((photo, i) => (
+                      <button
+                        key={photo.id}
+                        onClick={() => setLightbox(offset + i)}
+                        className="group relative aspect-square overflow-hidden rounded-lg shadow-sm hover:shadow-card-hover transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-primary"
+                      >
+                        <img
+                          src={photo.image_url}
+                          alt={photo.caption || `${album.title} — foto ${i + 1}`}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                          loading="lazy"
+                        />
+                        <div className="absolute inset-0 bg-foreground/0 group-hover:bg-foreground/20 transition-colors duration-300 rounded-lg" />
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              );
+            })}
+
+            {albums.length === 0 && (
+              <p className="text-center text-muted-foreground py-16">Galeria em atualização.</p>
+            )}
           </div>
         </div>
       </section>
 
       {/* Lightbox */}
-      {lightbox !== null && (
+      {lightbox !== null && total > 0 && (
         <div
           className="fixed inset-0 z-50 bg-foreground/90 flex items-center justify-center p-4"
           onClick={() => setLightbox(null)}
@@ -99,8 +161,8 @@ const SobrePage = () => {
           </button>
 
           <img
-            src={fotos[lightbox]}
-            alt={`Foto ${lightbox + 1}`}
+            src={flatPhotos[lightbox].image_url}
+            alt={flatPhotos[lightbox].caption || `Foto ${lightbox + 1}`}
             className="max-h-[85vh] max-w-[90vw] object-contain rounded-lg shadow-2xl"
             onClick={(e) => e.stopPropagation()}
           />
@@ -113,7 +175,7 @@ const SobrePage = () => {
           </button>
 
           <span className="absolute bottom-4 text-background/60 text-sm">
-            {lightbox + 1} / {totalFotos}
+            {lightbox + 1} / {total}
           </span>
         </div>
       )}

@@ -95,7 +95,7 @@ export type EstablishmentCategory =
 export const categoryLabels: Record<EstablishmentCategory, string> = {
   hospedagem: "Hospedagem",
   gastronomia: "Gastronomia",
-  lazer: "Lazer",
+  lazer: "Atrativos Turísticos/Lazer",
   cultura: "Cultura",
   artesanato: "Artesanato",
   comercio: "Comércio",

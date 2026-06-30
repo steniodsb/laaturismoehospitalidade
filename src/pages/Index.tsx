@@ -61,6 +61,19 @@ const Index = () => {
       <HeroSection />
       <CategoryGrid />
 
+      {events.length > 0 && (
+        <section className="py-12 md:py-16 bg-muted/50">
+          <div className="container">
+            <SectionHeader title="Agenda de Eventos" subtitle="Festivais, festas e comemorações do interior paulista" linkTo="/eventos" linkLabel="Ver todos" />
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+              {events.map((event) => (
+                <EventCard key={event.id} event={event} />
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
       {cities.length > 0 && (
         <section className="py-12 md:py-16">
           <div className="container">
@@ -74,21 +87,8 @@ const Index = () => {
         </section>
       )}
 
-      {events.length > 0 && (
-        <section className="py-12 md:py-16 bg-muted/50">
-          <div className="container">
-            <SectionHeader title="Acontece Agora" subtitle="Eventos e festivais no interior paulista" linkTo="/eventos" />
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-              {events.map((event) => (
-                <EventCard key={event.id} event={event} />
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
-
       {hospedagem.length > 0 && (
-        <section className="py-12 md:py-16">
+        <section className="py-12 md:py-16 bg-muted/50">
           <div className="container">
             <SectionHeader title="Onde Ficar" subtitle="As melhores pousadas e hotéis da região" linkTo="/explorar?cat=hospedagem" linkLabel="Ver mais" />
             <div className="px-10">
@@ -117,7 +117,7 @@ const Index = () => {
       )}
 
       {gastronomia.length > 0 && (
-        <section className="py-12 md:py-16 bg-muted/50">
+        <section className="py-12 md:py-16">
           <div className="container">
             <SectionHeader title="Onde Comer" subtitle="Os melhores restaurantes e sabores regionais" linkTo="/explorar?cat=gastronomia" linkLabel="Ver mais" />
             <div className="px-10">

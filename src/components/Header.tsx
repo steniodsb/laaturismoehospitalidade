@@ -56,6 +56,7 @@ const Header = () => {
         <nav className="hidden md:flex items-center gap-1">
           <Link to="/" className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${location.pathname === "/" ? "bg-primary/10 text-primary" : "text-foreground/70 hover:text-foreground hover:bg-muted"}`}>Início</Link>
           <Link to="/cidades" className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${location.pathname === "/cidades" ? "bg-primary/10 text-primary" : "text-foreground/70 hover:text-foreground hover:bg-muted"}`}>Cidades</Link>
+          <Link to="/regioes" className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${location.pathname.startsWith("/regioes") ? "bg-primary/10 text-primary" : "text-foreground/70 hover:text-foreground hover:bg-muted"}`}>Regiões Turísticas</Link>
 
           <div ref={dropdownRef} className="relative">
             <button onClick={() => setCatOpen(!catOpen)} className={`flex items-center gap-1 px-4 py-2 rounded-lg text-sm font-medium transition-colors ${location.search.includes("cat=") ? "bg-primary/10 text-primary" : "text-foreground/70 hover:text-foreground hover:bg-muted"}`}>
@@ -75,6 +76,9 @@ const Header = () => {
           <Link to="/eventos" className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${location.pathname === "/eventos" ? "bg-primary/10 text-primary" : "text-foreground/70 hover:text-foreground hover:bg-muted"}`}>Eventos</Link>
           <Link to="/sobre" className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${location.pathname === "/sobre" ? "bg-primary/10 text-primary" : "text-foreground/70 hover:text-foreground hover:bg-muted"}`}>Sobre</Link>
           <a href="https://heyzine.com/flip-book/981c27f95c.html" target="_blank" rel="noopener noreferrer" className="px-4 py-2 rounded-lg text-sm font-medium transition-colors text-foreground/70 hover:text-foreground hover:bg-muted">Revista</a>
+          <a href="https://www.turismo.sp.gov.br/sec_turismo" target="_blank" rel="noopener noreferrer" className="px-4 py-2 rounded-lg text-sm font-medium transition-colors text-foreground/70 hover:text-foreground hover:bg-muted">SETUR</a>
+          <a href="https://www.gov.br/turismo/pt-br" target="_blank" rel="noopener noreferrer" className="px-4 py-2 rounded-lg text-sm font-medium transition-colors text-foreground/70 hover:text-foreground hover:bg-muted">MTUR</a>
+          <a href="https://cadastur.turismo.gov.br/hotsite/#!/public/capa/entrar#capaInicio" target="_blank" rel="noopener noreferrer" className="px-4 py-2 rounded-lg text-sm font-medium transition-colors text-foreground/70 hover:text-foreground hover:bg-muted">Cadastur</a>
         </nav>
 
         <div className="hidden md:flex items-center gap-3">
@@ -110,6 +114,7 @@ const Header = () => {
           <nav className="container py-4 flex flex-col gap-1">
             <Link to="/" onClick={() => setMobileOpen(false)} className="px-4 py-3 rounded-lg text-sm font-medium text-foreground/70 hover:bg-muted">Início</Link>
             <Link to="/cidades" onClick={() => setMobileOpen(false)} className="px-4 py-3 rounded-lg text-sm font-medium text-foreground/70 hover:bg-muted">Cidades</Link>
+            <Link to="/regioes" onClick={() => setMobileOpen(false)} className="px-4 py-3 rounded-lg text-sm font-medium text-foreground/70 hover:bg-muted">Regiões Turísticas</Link>
             <button onClick={() => setCatOpen(!catOpen)} className="flex items-center justify-between px-4 py-3 rounded-lg text-sm font-medium text-foreground/70 hover:bg-muted">
               Categorias <ChevronDown className={`h-4 w-4 transition-transform ${catOpen ? "rotate-180" : ""}`} />
             </button>
@@ -124,6 +129,9 @@ const Header = () => {
             <Link to="/eventos" onClick={() => setMobileOpen(false)} className="px-4 py-3 rounded-lg text-sm font-medium text-foreground/70 hover:bg-muted">Eventos</Link>
             <Link to="/sobre" onClick={() => setMobileOpen(false)} className="px-4 py-3 rounded-lg text-sm font-medium text-foreground/70 hover:bg-muted">Sobre</Link>
             <a href="https://heyzine.com/flip-book/981c27f95c.html" target="_blank" rel="noopener noreferrer" onClick={() => setMobileOpen(false)} className="px-4 py-3 rounded-lg text-sm font-medium text-foreground/70 hover:bg-muted">Revista</a>
+            <a href="https://www.turismo.sp.gov.br/sec_turismo" target="_blank" rel="noopener noreferrer" onClick={() => setMobileOpen(false)} className="px-4 py-3 rounded-lg text-sm font-medium text-foreground/70 hover:bg-muted">SETUR</a>
+            <a href="https://www.gov.br/turismo/pt-br" target="_blank" rel="noopener noreferrer" onClick={() => setMobileOpen(false)} className="px-4 py-3 rounded-lg text-sm font-medium text-foreground/70 hover:bg-muted">MTUR</a>
+            <a href="https://cadastur.turismo.gov.br/hotsite/#!/public/capa/entrar#capaInicio" target="_blank" rel="noopener noreferrer" onClick={() => setMobileOpen(false)} className="px-4 py-3 rounded-lg text-sm font-medium text-foreground/70 hover:bg-muted">Cadastur</a>
             <div className="pt-2 border-t border-border mt-2 space-y-2">
               {user ? (
                 <>

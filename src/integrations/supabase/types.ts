@@ -14,6 +14,218 @@ export type Database = {
   }
   public: {
     Tables: {
+      about_albums: {
+        Row: {
+          created_at: string
+          display_order: number
+          event_date: string | null
+          id: string
+          is_active: boolean
+          title: string
+        }
+        Insert: {
+          created_at?: string
+          display_order?: number
+          event_date?: string | null
+          id?: string
+          is_active?: boolean
+          title: string
+        }
+        Update: {
+          created_at?: string
+          display_order?: number
+          event_date?: string | null
+          id?: string
+          is_active?: boolean
+          title?: string
+        }
+        Relationships: []
+      }
+      about_album_photos: {
+        Row: {
+          album_id: string
+          caption: string | null
+          created_at: string
+          display_order: number
+          id: string
+          image_url: string
+        }
+        Insert: {
+          album_id: string
+          caption?: string | null
+          created_at?: string
+          display_order?: number
+          id?: string
+          image_url: string
+        }
+        Update: {
+          album_id?: string
+          caption?: string | null
+          created_at?: string
+          display_order?: number
+          id?: string
+          image_url?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "about_album_photos_album_id_fkey"
+            columns: ["album_id"]
+            isOneToOne: false
+            referencedRelation: "about_albums"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      tourism_regions: {
+        Row: {
+          address: string | null
+          contact: string | null
+          cover_image_url: string | null
+          created_at: string
+          description: string | null
+          display_order: number
+          email: string | null
+          id: string
+          information: string | null
+          is_active: boolean
+          name: string
+          slug: string
+        }
+        Insert: {
+          address?: string | null
+          contact?: string | null
+          cover_image_url?: string | null
+          created_at?: string
+          description?: string | null
+          display_order?: number
+          email?: string | null
+          id?: string
+          information?: string | null
+          is_active?: boolean
+          name: string
+          slug: string
+        }
+        Update: {
+          address?: string | null
+          contact?: string | null
+          cover_image_url?: string | null
+          created_at?: string
+          description?: string | null
+          display_order?: number
+          email?: string | null
+          id?: string
+          information?: string | null
+          is_active?: boolean
+          name?: string
+          slug?: string
+        }
+        Relationships: []
+      }
+      tourism_region_cities: {
+        Row: {
+          created_at: string
+          display_order: number
+          id: string
+          name: string
+          region_id: string
+          video_url: string | null
+        }
+        Insert: {
+          created_at?: string
+          display_order?: number
+          id?: string
+          name: string
+          region_id: string
+          video_url?: string | null
+        }
+        Update: {
+          created_at?: string
+          display_order?: number
+          id?: string
+          name?: string
+          region_id?: string
+          video_url?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "tourism_region_cities_region_id_fkey"
+            columns: ["region_id"]
+            isOneToOne: false
+            referencedRelation: "tourism_regions"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      tourism_region_city_photos: {
+        Row: {
+          created_at: string
+          display_order: number
+          id: string
+          image_url: string
+          region_city_id: string
+        }
+        Insert: {
+          created_at?: string
+          display_order?: number
+          id?: string
+          image_url: string
+          region_city_id: string
+        }
+        Update: {
+          created_at?: string
+          display_order?: number
+          id?: string
+          image_url?: string
+          region_city_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "tourism_region_city_photos_region_city_id_fkey"
+            columns: ["region_city_id"]
+            isOneToOne: false
+            referencedRelation: "tourism_region_cities"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      tourism_region_documents: {
+        Row: {
+          category: string
+          created_at: string
+          display_order: number
+          file_url: string
+          id: string
+          label: string
+          region_id: string
+        }
+        Insert: {
+          category?: string
+          created_at?: string
+          display_order?: number
+          file_url: string
+          id?: string
+          label: string
+          region_id: string
+        }
+        Update: {
+          category?: string
+          created_at?: string
+          display_order?: number
+          file_url?: string
+          id?: string
+          label?: string
+          region_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "tourism_region_documents_region_id_fkey"
+            columns: ["region_id"]
+            isOneToOne: false
+            referencedRelation: "tourism_regions"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
       banners: {
         Row: {
           created_at: string

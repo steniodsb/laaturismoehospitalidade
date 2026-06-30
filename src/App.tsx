@@ -26,7 +26,12 @@ import CategoriesAdminPage from "./pages/admin/CategoriesAdminPage";
 import TagsAdminPage from "./pages/admin/TagsAdminPage";
 import EventsAdminPage from "./pages/admin/EventsAdminPage";
 import BannersAdminPage from "./pages/admin/BannersAdminPage";
+import AboutGalleryAdminPage from "./pages/admin/AboutGalleryAdminPage";
+import RegionsAdminPage from "./pages/admin/RegionsAdminPage";
+import RegionEditorPage from "./pages/admin/RegionEditorPage";
 import SobrePage from "./pages/SobrePage";
+import RegioesPage from "./pages/RegioesPage";
+import RegiaoDetailPage from "./pages/RegiaoDetailPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -46,6 +51,8 @@ const AppContent = () => {
         <Route path="/cidades/:slug" element={<CityDetailPage />} />
         <Route path="/explorar" element={<ExplorePage />} />
         <Route path="/eventos" element={<EventsPage />} />
+        <Route path="/regioes" element={<RegioesPage />} />
+        <Route path="/regioes/:slug" element={<RegiaoDetailPage />} />
         <Route path="/estabelecimento/:id" element={<EstablishmentDetailPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/cadastro" element={<RegisterPage />} />
@@ -61,6 +68,9 @@ const AppContent = () => {
           <Route path="tags" element={<TagsAdminPage />} />
           <Route path="eventos" element={<EventsAdminPage />} />
           <Route path="banners" element={<BannersAdminPage />} />
+          <Route path="sobre-galeria" element={<AboutGalleryAdminPage />} />
+          <Route path="regioes" element={<RegionsAdminPage />} />
+          <Route path="regioes/:id" element={<RegionEditorPage />} />
         </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>
