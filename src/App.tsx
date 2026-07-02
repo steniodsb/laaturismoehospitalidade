@@ -12,6 +12,7 @@ import CitiesPage from "./pages/CitiesPage";
 import CityDetailPage from "./pages/CityDetailPage";
 import ExplorePage from "./pages/ExplorePage";
 import EventsPage from "./pages/EventsPage";
+import EventDetailPage from "./pages/EventDetailPage";
 import EstablishmentDetailPage from "./pages/EstablishmentDetailPage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
@@ -51,6 +52,7 @@ const AppContent = () => {
         <Route path="/cidades/:slug" element={<CityDetailPage />} />
         <Route path="/explorar" element={<ExplorePage />} />
         <Route path="/eventos" element={<EventsPage />} />
+        <Route path="/eventos/:id" element={<EventDetailPage />} />
         <Route path="/regioes" element={<RegioesPage />} />
         <Route path="/regioes/:slug" element={<RegiaoDetailPage />} />
         <Route path="/estabelecimento/:id" element={<EstablishmentDetailPage />} />

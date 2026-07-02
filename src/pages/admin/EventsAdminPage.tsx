@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import ImageUpload from "@/components/admin/establishment-forms/ImageUpload";
+import GalleryUpload from "@/components/admin/establishment-forms/GalleryUpload";
 
 interface EventItem {
   id: string;
@@ -29,6 +30,7 @@ const EventsAdminPage = () => {
   const [deleting, setDeleting] = useState<EventItem | null>(null);
   const [loading, setLoading] = useState(false);
   const [form, setForm] = useState<Record<string, any>>({ name: "", event_type: "", start_date: "", end_date: "", description: "", image_url: "", city_id: "", is_featured: false, display_order: "0" });
+  const [gallery, setGallery] = useState<{ url: string; caption?: string }[]>([]);
   const { toast } = useToast();
 
   const fetchData = async () => {
@@ -49,12 +51,13 @@ const EventsAdminPage = () => {
     { key: "city_name", label: "Cidade" },
   ];
 
-  const openAdd = () => { setEditing(null); setForm({ name: "", event_type: "", start_date: "", end_date: "", description: "", image_url: "", city_id: "", is_featured: false, display_order: "0" }); setModalOpen(true); };
+  const openAdd = () => { setEditing(null); setForm({ name: "", event_type: "", start_date: "", end_date: "", description: "", image_url: "", city_id: "", is_featured: false, display_order: "0" }); setGallery([]); setModalOpen(true); };
 
   const openEdit = async (item: EventItem) => {
     const { data: full } = await supabase.from("events").select("*").eq("id", item.id).single();
     if (full) {
       setEditing(item);
+      setGallery(Array.isArray(full.gallery) ? (full.gallery as { url: string; caption?: string }[]) : []);
       setForm({
         name: full.name || "", event_type: full.event_type || "", start_date: full.start_date || "",
         end_date: full.end_date || "", description: full.description || "", image_url: full.image_url || "",
@@ -71,7 +74,7 @@ const EventsAdminPage = () => {
       name: form.name as string, event_type: form.event_type || null, description: form.description || null,
       image_url: form.image_url || null, city_id: form.city_id || null,
       start_date: form.start_date || null, end_date: form.end_date || null,
-      is_featured: !!form.is_featured, display_order: parseInt(form.display_order) || 0,
+      gallery, is_featured: !!form.is_featured, display_order: parseInt(form.display_order) || 0,
     };
     if (editing) {
       const { error } = await supabase.from("events").update(payload).eq("id", editing.id);
@@ -119,6 +122,7 @@ const EventsAdminPage = () => {
         </div>
         <div><label className="text-sm font-medium text-foreground mb-1.5 block">Descrição</label><Textarea value={form.description} onChange={(e) => set("description", e.target.value)} /></div>
         <ImageUpload value={form.image_url} onChange={(url) => set("image_url", url)} path={`events/${editing?.id || "new"}`} label="Imagem do evento" />
+        <GalleryUpload value={gallery} onChange={setGallery} path={`events/${editing?.id || "new"}/gallery`} />
         <div className="grid grid-cols-2 gap-3 border-t border-border pt-4">
           <div className="flex items-center gap-2">
             <input type="checkbox" checked={form.is_featured} onChange={(e) => set("is_featured", e.target.checked)} id="event-featured" className="h-4 w-4 rounded border-input" />

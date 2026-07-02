@@ -1,6 +1,6 @@
 import { useParams, Link } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { MapPin, Users, Calendar, ArrowLeft, Play } from "lucide-react";
+import { MapPin, Users, Calendar, ArrowLeft, Play, X, ChevronLeft, ChevronRight } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import EstablishmentCard, { type EstablishmentData } from "@/components/EstablishmentCard";
 import EventCard, { type EventData } from "@/components/EventCard";
@@ -16,6 +16,7 @@ interface CityFull {
   region: string | null;
   population: string | null;
   presentation_video_url: string | null;
+  gallery: { url: string; caption?: string }[] | null;
 }
 
 const getYoutubeEmbedUrl = (url: string): string | null => {
@@ -39,6 +40,8 @@ const CityDetailPage = () => {
   const [establishments, setEstablishments] = useState<EstablishmentData[]>([]);
   const [events, setEvents] = useState<EventData[]>([]);
   const [loading, setLoading] = useState(true);
+  const [galleryOpen, setGalleryOpen] = useState(false);
+  const [galleryIndex, setGalleryIndex] = useState(0);
 
   useEffect(() => {
     if (!slug) return;
@@ -46,7 +49,7 @@ const CityDetailPage = () => {
       setLoading(true);
       const { data: c } = await supabase.from("cities").select("*").eq("slug", slug).single();
       if (c) {
-        setCity(c);
+        setCity(c as unknown as CityFull);
         const [estRes, evtRes] = await Promise.all([
           supabase.from("establishments").select("id, name, image_url, short_description, amenities, rating, category:categories(name, icon, slug), city:cities(name)").eq("city_id", c.id).eq("is_active", true).order("display_order"),
           supabase.from("events").select("id, name, image_url, description, start_date, end_date, event_type, city:cities(name)").eq("city_id", c.id).eq("is_active", true).order("start_date"),
@@ -74,6 +77,8 @@ const CityDetailPage = () => {
     );
   }
 
+  const gallery = Array.isArray(city.gallery) ? city.gallery : [];
+
   return (
     <div className="min-h-screen">
       <section className="relative h-[50vh] min-h-[300px] max-h-[500px] overflow-hidden">
@@ -97,6 +102,21 @@ const CityDetailPage = () => {
         <section className="py-10 md:py-14">
           <div className="container max-w-3xl">
             <p className="text-lg text-muted-foreground leading-relaxed">{city.description}</p>
+          </div>
+        </section>
+      )}
+
+      {gallery.length > 0 && (
+        <section className="py-10 md:py-14">
+          <div className="container">
+            <h2 className="text-2xl font-sans font-normal text-foreground mb-6">Galeria de fotos</h2>
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
+              {gallery.map((img, i) => (
+                <button key={i} onClick={() => { setGalleryIndex(i); setGalleryOpen(true); }} className="relative aspect-[4/3] rounded-lg overflow-hidden border border-border group/photo">
+                  <img src={img.url} alt={img.caption || `${city.name} - foto ${i + 1}`} className="w-full h-full object-cover group-hover/photo:scale-105 transition-transform duration-500" loading="lazy" />
+                </button>
+              ))}
+            </div>
           </div>
         </section>
       )}
@@ -168,6 +188,19 @@ const CityDetailPage = () => {
             <p className="text-muted-foreground">Em breve, novos estabelecimentos e eventos serão adicionados para {city.name}.</p>
           </div>
         </section>
+      )}
+
+      {galleryOpen && gallery.length > 0 && (
+        <div className="fixed inset-0 z-[100] bg-foreground/95 flex items-center justify-center">
+          <button onClick={() => setGalleryOpen(false)} className="absolute top-4 right-4 text-background/70 hover:text-background z-10"><X className="h-8 w-8" /></button>
+          <button onClick={() => setGalleryIndex((prev) => (prev - 1 + gallery.length) % gallery.length)} className="absolute left-4 text-background/70 hover:text-background z-10"><ChevronLeft className="h-10 w-10" /></button>
+          <button onClick={() => setGalleryIndex((prev) => (prev + 1) % gallery.length)} className="absolute right-4 text-background/70 hover:text-background z-10"><ChevronRight className="h-10 w-10" /></button>
+          <div className="max-w-4xl max-h-[80vh] w-full px-16">
+            <img src={gallery[galleryIndex].url} alt={gallery[galleryIndex].caption || ""} className="w-full h-full object-contain rounded-lg" />
+            {gallery[galleryIndex].caption && <p className="text-center text-background/70 mt-4 text-sm">{gallery[galleryIndex].caption}</p>}
+            <p className="text-center text-background/50 mt-2 text-xs">{galleryIndex + 1} / {gallery.length}</p>
+          </div>
+        </div>
       )}
     </div>
   );

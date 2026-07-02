@@ -294,6 +294,7 @@ export type Database = {
           created_at: string
           description: string | null
           display_order: number
+          gallery: Json
           id: string
           image_url: string | null
           is_featured: boolean
@@ -309,6 +310,7 @@ export type Database = {
           created_at?: string
           description?: string | null
           display_order?: number
+          gallery?: Json
           id?: string
           image_url?: string | null
           is_featured?: boolean
@@ -324,6 +326,7 @@ export type Database = {
           created_at?: string
           description?: string | null
           display_order?: number
+          gallery?: Json
           id?: string
           image_url?: string | null
           is_featured?: boolean
@@ -466,6 +469,7 @@ export type Database = {
           end_date: string | null
           establishment_id: string | null
           event_type: string | null
+          gallery: Json
           id: string
           image_url: string | null
           is_active: boolean
@@ -482,6 +486,7 @@ export type Database = {
           end_date?: string | null
           establishment_id?: string | null
           event_type?: string | null
+          gallery?: Json
           id?: string
           image_url?: string | null
           is_active?: boolean
@@ -498,6 +503,7 @@ export type Database = {
           end_date?: string | null
           establishment_id?: string | null
           event_type?: string | null
+          gallery?: Json
           id?: string
           image_url?: string | null
           is_active?: boolean

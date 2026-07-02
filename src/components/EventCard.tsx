@@ -1,4 +1,5 @@
 import { MapPin, Calendar } from "lucide-react";
+import { Link } from "react-router-dom";
 
 export interface EventData {
   id: string;
@@ -25,7 +26,7 @@ const EventCard = ({ event }: EventCardProps) => {
   const cityName = event.city?.name || "";
 
   return (
-    <div className="group bg-card rounded-xl overflow-hidden shadow-card hover:shadow-card-hover transition-all duration-300">
+    <Link to={`/eventos/${event.id}`} className="group block bg-card rounded-xl overflow-hidden shadow-card hover:shadow-card-hover transition-all duration-300">
       <div className="relative h-44 overflow-hidden">
         <img src={imgSrc} alt={event.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
         {event.start_date && (
@@ -47,7 +48,7 @@ const EventCard = ({ event }: EventCardProps) => {
         )}
         <p className="text-sm text-muted-foreground line-clamp-2">{event.description}</p>
       </div>
-    </div>
+    </Link>
   );
 };
 

@@ -8,6 +8,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
 import ImageUpload from "@/components/admin/establishment-forms/ImageUpload";
+import GalleryUpload from "@/components/admin/establishment-forms/GalleryUpload";
 
 interface CityItem {
   id: string;
@@ -39,6 +40,7 @@ const CitiesAdminPage = () => {
   const [deleting, setDeleting] = useState<CityItem | null>(null);
   const [loading, setLoading] = useState(false);
   const [form, setForm] = useState(empty);
+  const [gallery, setGallery] = useState<{ url: string; caption?: string }[]>([]);
   const { toast } = useToast();
 
   const fetchData = async () => {
@@ -48,12 +50,13 @@ const CitiesAdminPage = () => {
 
   useEffect(() => { fetchData(); }, []);
 
-  const openAdd = () => { setEditing(null); setForm(empty); setModalOpen(true); };
+  const openAdd = () => { setEditing(null); setForm(empty); setGallery([]); setModalOpen(true); };
 
   const openEdit = async (item: CityItem) => {
     const { data: full } = await supabase.from("cities").select("*").eq("id", item.id).single();
     if (full) {
       setEditing(item);
+      setGallery(Array.isArray(full.gallery) ? (full.gallery as { url: string; caption?: string }[]) : []);
       setForm({
         name: full.name || "",
         slug: full.slug || "",
@@ -74,7 +77,7 @@ const CitiesAdminPage = () => {
     e.preventDefault();
     setLoading(true);
     const slug = form.slug || form.name.toLowerCase().replace(/\s+/g, "-").replace(/[^a-z0-9-]/g, "");
-    const payload = { ...form, slug, display_order: parseInt(form.display_order as string) || 0 };
+    const payload = { ...form, slug, gallery, display_order: parseInt(form.display_order as string) || 0 };
 
     if (editing) {
       const { error } = await supabase.from("cities").update(payload).eq("id", editing.id);
@@ -115,6 +118,7 @@ const CitiesAdminPage = () => {
         <div><label className="text-sm font-medium text-foreground mb-1.5 block">Descrição</label><Textarea value={form.description} onChange={(e) => set("description", e.target.value)} /></div>
         <div><label className="text-sm font-medium text-foreground mb-1.5 block">Link de apresentação (vídeo/YouTube)</label><Input value={form.presentation_video_url} onChange={(e) => set("presentation_video_url", e.target.value)} placeholder="https://www.youtube.com/watch?v=..." /></div>
         <ImageUpload value={form.image_url} onChange={(url) => set("image_url", url)} path={`cities/${editing?.id || "new"}`} label="Imagem da cidade" />
+        <GalleryUpload value={gallery} onChange={setGallery} path={`cities/${editing?.id || "new"}/gallery`} />
         <div className="grid grid-cols-2 gap-3 border-t border-border pt-4">
           <div className="flex items-center gap-2">
             <input type="checkbox" checked={form.is_featured} onChange={(e) => set("is_featured", e.target.checked)} id="city-featured" className="h-4 w-4 rounded border-input" />
