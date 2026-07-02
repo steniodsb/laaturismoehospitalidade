@@ -29,7 +29,7 @@ const EventsAdminPage = () => {
   const [editing, setEditing] = useState<EventItem | null>(null);
   const [deleting, setDeleting] = useState<EventItem | null>(null);
   const [loading, setLoading] = useState(false);
-  const [form, setForm] = useState<Record<string, any>>({ name: "", event_type: "", start_date: "", end_date: "", description: "", image_url: "", city_id: "", is_featured: false, display_order: "0" });
+  const [form, setForm] = useState<Record<string, any>>({ name: "", event_type: "", start_date: "", end_date: "", description: "", image_url: "", city_id: "", address: "", attractions: "", whatsapp: "", external_url: "", is_featured: false, display_order: "0" });
   const [gallery, setGallery] = useState<{ url: string; caption?: string }[]>([]);
   const { toast } = useToast();
 
@@ -51,7 +51,7 @@ const EventsAdminPage = () => {
     { key: "city_name", label: "Cidade" },
   ];
 
-  const openAdd = () => { setEditing(null); setForm({ name: "", event_type: "", start_date: "", end_date: "", description: "", image_url: "", city_id: "", is_featured: false, display_order: "0" }); setGallery([]); setModalOpen(true); };
+  const openAdd = () => { setEditing(null); setForm({ name: "", event_type: "", start_date: "", end_date: "", description: "", image_url: "", city_id: "", address: "", attractions: "", whatsapp: "", external_url: "", is_featured: false, display_order: "0" }); setGallery([]); setModalOpen(true); };
 
   const openEdit = async (item: EventItem) => {
     const { data: full } = await supabase.from("events").select("*").eq("id", item.id).single();
@@ -61,7 +61,10 @@ const EventsAdminPage = () => {
       setForm({
         name: full.name || "", event_type: full.event_type || "", start_date: full.start_date || "",
         end_date: full.end_date || "", description: full.description || "", image_url: full.image_url || "",
-        city_id: full.city_id || "", is_featured: full.is_featured || false, display_order: String(full.display_order || 0),
+        city_id: full.city_id || "", address: full.address || "",
+        attractions: Array.isArray(full.attractions) ? (full.attractions as string[]).join(", ") : "",
+        whatsapp: full.whatsapp || "", external_url: full.external_url || "",
+        is_featured: full.is_featured || false, display_order: String(full.display_order || 0),
       });
       setModalOpen(true);
     }
@@ -73,6 +76,8 @@ const EventsAdminPage = () => {
     const payload = {
       name: form.name as string, event_type: form.event_type || null, description: form.description || null,
       image_url: form.image_url || null, city_id: form.city_id || null,
+      address: form.address || null, whatsapp: form.whatsapp || null, external_url: form.external_url || null,
+      attractions: (form.attractions as string).split(",").map((a: string) => a.trim()).filter(Boolean),
       start_date: form.start_date || null, end_date: form.end_date || null,
       gallery, is_featured: !!form.is_featured, display_order: parseInt(form.display_order) || 0,
     };
@@ -120,7 +125,17 @@ const EventsAdminPage = () => {
             {cities.map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}
           </select>
         </div>
+        <div><label className="text-sm font-medium text-foreground mb-1.5 block">Endereço / Local</label><Input value={form.address} onChange={(e) => set("address", e.target.value)} placeholder="Ex: Praça Central, Centro" /></div>
         <div><label className="text-sm font-medium text-foreground mb-1.5 block">Descrição</label><Textarea value={form.description} onChange={(e) => set("description", e.target.value)} /></div>
+        <div>
+          <label className="text-sm font-medium text-foreground mb-1.5 block">Atrativos</label>
+          <Textarea value={form.attractions} onChange={(e) => set("attractions", e.target.value)} placeholder="Separe por vírgula. Ex: Shows ao vivo, Praça de alimentação, Feira de artesanato" />
+          <p className="text-xs text-muted-foreground mt-1">O que o evento terá — separe cada item por vírgula.</p>
+        </div>
+        <div className="grid grid-cols-2 gap-3">
+          <div><label className="text-sm font-medium text-foreground mb-1.5 block">WhatsApp</label><Input value={form.whatsapp} onChange={(e) => set("whatsapp", e.target.value)} placeholder="5514999999999" /></div>
+          <div><label className="text-sm font-medium text-foreground mb-1.5 block">Link externo (inscrição/site)</label><Input value={form.external_url} onChange={(e) => set("external_url", e.target.value)} placeholder="https://..." /></div>
+        </div>
         <ImageUpload value={form.image_url} onChange={(url) => set("image_url", url)} path={`events/${editing?.id || "new"}`} label="Imagem do evento" />
         <GalleryUpload value={gallery} onChange={setGallery} path={`events/${editing?.id || "new"}/gallery`} />
         <div className="grid grid-cols-2 gap-3 border-t border-border pt-4">

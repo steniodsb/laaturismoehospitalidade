@@ -462,6 +462,8 @@ export type Database = {
       }
       events: {
         Row: {
+          address: string | null
+          attractions: Json
           city_id: string | null
           created_at: string
           description: string | null
@@ -469,6 +471,7 @@ export type Database = {
           end_date: string | null
           establishment_id: string | null
           event_type: string | null
+          external_url: string | null
           gallery: Json
           id: string
           image_url: string | null
@@ -477,8 +480,11 @@ export type Database = {
           name: string
           start_date: string | null
           updated_at: string
+          whatsapp: string | null
         }
         Insert: {
+          address?: string | null
+          attractions?: Json
           city_id?: string | null
           created_at?: string
           description?: string | null
@@ -486,6 +492,7 @@ export type Database = {
           end_date?: string | null
           establishment_id?: string | null
           event_type?: string | null
+          external_url?: string | null
           gallery?: Json
           id?: string
           image_url?: string | null
@@ -494,8 +501,11 @@ export type Database = {
           name: string
           start_date?: string | null
           updated_at?: string
+          whatsapp?: string | null
         }
         Update: {
+          address?: string | null
+          attractions?: Json
           city_id?: string | null
           created_at?: string
           description?: string | null
@@ -503,6 +513,7 @@ export type Database = {
           end_date?: string | null
           establishment_id?: string | null
           event_type?: string | null
+          external_url?: string | null
           gallery?: Json
           id?: string
           image_url?: string | null
@@ -511,6 +522,7 @@ export type Database = {
           name?: string
           start_date?: string | null
           updated_at?: string
+          whatsapp?: string | null
         }
         Relationships: [
           {

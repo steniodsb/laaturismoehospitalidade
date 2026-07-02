@@ -1,8 +1,12 @@
 import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
-import { MapPin, Calendar, ArrowLeft, X, ChevronLeft, ChevronRight } from "lucide-react";
+import { MapPin, Calendar, ArrowLeft, X, ChevronLeft, ChevronRight, Sparkles, Navigation, Check, MessageCircle, Share2, CalendarPlus, ExternalLink } from "lucide-react";
+import { toast } from "sonner";
 
 import { supabase } from "@/integrations/supabase/client";
+import { Button } from "@/components/ui/button";
+import EstablishmentCard, { type EstablishmentData } from "@/components/EstablishmentCard";
+import SectionHeader from "@/components/SectionHeader";
 
 interface EventFull {
   id: string;
@@ -12,7 +16,12 @@ interface EventFull {
   start_date: string | null;
   end_date: string | null;
   event_type: string | null;
+  address: string | null;
+  attractions: string[] | null;
+  whatsapp: string | null;
+  external_url: string | null;
   gallery: { url: string; caption?: string }[] | null;
+  city_id: string | null;
   city: { name: string; slug: string } | null;
 }
 
@@ -21,24 +30,46 @@ const formatDate = (dateStr: string) => {
   return d.toLocaleDateString("pt-BR", { day: "2-digit", month: "long", year: "numeric" });
 };
 
+// Data no formato YYYYMMDD (all-day) para o Google Agenda; o fim é exclusivo.
+const toCalDate = (dateStr: string, addDays = 0) => {
+  const d = new Date(dateStr + "T00:00:00");
+  d.setDate(d.getDate() + addDays);
+  return `${d.getFullYear()}${String(d.getMonth() + 1).padStart(2, "0")}${String(d.getDate()).padStart(2, "0")}`;
+};
+
 const EventDetailPage = () => {
   const { id } = useParams<{ id: string }>();
   const [event, setEvent] = useState<EventFull | null>(null);
+  const [related, setRelated] = useState<EstablishmentData[]>([]);
   const [loading, setLoading] = useState(true);
   const [galleryOpen, setGalleryOpen] = useState(false);
   const [galleryIndex, setGalleryIndex] = useState(0);
 
   useEffect(() => {
     if (!id) return;
-    supabase
-      .from("events")
-      .select("id, name, image_url, description, start_date, end_date, event_type, gallery, city:cities(name, slug)")
-      .eq("id", id)
-      .single()
-      .then(({ data }) => {
-        if (data) setEvent(data as unknown as EventFull);
-        setLoading(false);
-      });
+    const load = async () => {
+      setLoading(true);
+      const { data } = await supabase
+        .from("events")
+        .select("id, name, image_url, description, start_date, end_date, event_type, address, attractions, whatsapp, external_url, gallery, city_id, city:cities(name, slug)")
+        .eq("id", id)
+        .single();
+      if (data) {
+        setEvent(data as unknown as EventFull);
+        if (data.city_id) {
+          const { data: est } = await supabase
+            .from("establishments")
+            .select("id, name, image_url, short_description, amenities, rating, category:categories(name, icon, slug), city:cities(name)")
+            .eq("city_id", data.city_id)
+            .eq("is_active", true)
+            .order("display_order")
+            .limit(3);
+          if (est) setRelated(est as unknown as EstablishmentData[]);
+        }
+      }
+      setLoading(false);
+    };
+    load();
   }, [id]);
 
   if (loading) {
@@ -58,7 +89,37 @@ const EventDetailPage = () => {
 
   const gallery = Array.isArray(event.gallery) ? event.gallery : [];
   const allImages = gallery.length > 0 ? gallery : [{ url: event.image_url || "/placeholder.svg", caption: event.name }];
+  const attractions = Array.isArray(event.attractions) ? event.attractions : [];
   const cityName = event.city?.name || "";
+  const mapQuery = [event.address, cityName].filter(Boolean).join(", ");
+  const whatsappDigits = (event.whatsapp || "").replace(/\D/g, "");
+
+  const calendarUrl = event.start_date
+    ? (() => {
+        const params = new URLSearchParams({
+          action: "TEMPLATE",
+          text: event.name,
+          dates: `${toCalDate(event.start_date)}/${toCalDate(event.end_date || event.start_date, 1)}`,
+        });
+        if (event.description) params.set("details", event.description);
+        if (mapQuery) params.set("location", mapQuery);
+        return `https://calendar.google.com/calendar/render?${params.toString()}`;
+      })()
+    : null;
+
+  const handleShare = async () => {
+    const url = window.location.href;
+    try {
+      if (navigator.share) {
+        await navigator.share({ title: event.name, url });
+      } else {
+        await navigator.clipboard.writeText(url);
+        toast.success("Link copiado para a área de transferência!");
+      }
+    } catch {
+      /* compartilhamento cancelado pelo usuário */
+    }
+  };
 
   return (
     <div className="min-h-screen">
@@ -113,10 +174,65 @@ const EventDetailPage = () => {
       {/* Content */}
       <section className="py-10 md:py-14">
         <div className="container max-w-3xl">
+          {/* Ações */}
+          <div className="flex flex-wrap gap-3 mb-10">
+            {whatsappDigits && (
+              <a href={`https://wa.me/${whatsappDigits}`} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 bg-[#25D366] text-white font-semibold px-4 py-2.5 rounded-lg hover:bg-[#20bd5a] transition-colors text-sm">
+                <MessageCircle className="h-4 w-4" /> WhatsApp
+              </a>
+            )}
+            {event.external_url && (
+              <a href={event.external_url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 bg-primary text-primary-foreground font-semibold px-4 py-2.5 rounded-lg hover:bg-primary/90 transition-colors text-sm">
+                <ExternalLink className="h-4 w-4" /> Inscrição / Mais informações
+              </a>
+            )}
+            {calendarUrl && (
+              <a href={calendarUrl} target="_blank" rel="noopener noreferrer">
+                <Button variant="outline" className="gap-2"><CalendarPlus className="h-4 w-4" /> Adicionar ao Google Agenda</Button>
+              </a>
+            )}
+            <Button variant="outline" onClick={handleShare} className="gap-2"><Share2 className="h-4 w-4" /> Compartilhar</Button>
+          </div>
+
           {event.description && (
             <div>
               <h2 className="text-2xl font-sans font-normal text-foreground mb-4">Sobre o evento</h2>
               <p className="text-muted-foreground leading-relaxed whitespace-pre-line">{event.description}</p>
+            </div>
+          )}
+
+          {attractions.length > 0 && (
+            <div className="mt-10">
+              <h2 className="text-2xl font-sans font-normal text-foreground mb-5 flex items-center gap-2">
+                <Sparkles className="h-5 w-5 text-primary" /> Atrativos do evento
+              </h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                {attractions.map((item, i) => (
+                  <div key={i} className="flex items-start gap-2.5 bg-muted/40 rounded-lg px-4 py-3">
+                    <Check className="h-4 w-4 text-primary mt-0.5 flex-shrink-0" />
+                    <span className="text-sm text-foreground">{item}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {(event.address || cityName) && (
+            <div className="mt-10">
+              <h2 className="text-2xl font-sans font-normal text-foreground mb-4 flex items-center gap-2">
+                <MapPin className="h-5 w-5 text-primary" /> Local
+              </h2>
+              {event.address && <p className="text-muted-foreground mb-4">{event.address}{cityName && ` — ${cityName}`}</p>}
+              {mapQuery && (
+                <>
+                  <div className="rounded-xl overflow-hidden border border-border">
+                    <iframe title="Localização do evento" width="100%" height="300" style={{ border: 0 }} loading="lazy" src={`https://www.google.com/maps?q=${encodeURIComponent(mapQuery)}&z=15&output=embed`} />
+                  </div>
+                  <a href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(mapQuery)}`} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 mt-4 text-primary font-medium hover:underline">
+                    <Navigation className="h-4 w-4" /> Abrir no Google Maps
+                  </a>
+                </>
+              )}
             </div>
           )}
 
@@ -129,6 +245,18 @@ const EventDetailPage = () => {
           )}
         </div>
       </section>
+
+      {/* Estabelecimentos relacionados */}
+      {related.length > 0 && (
+        <section className="py-10 md:py-14 bg-muted/50">
+          <div className="container">
+            <SectionHeader title="Onde ir por perto" subtitle={cityName ? `Hospedagem e gastronomia em ${cityName}` : "Hospedagem e gastronomia na região"} />
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+              {related.map((est) => <EstablishmentCard key={est.id} establishment={est} />)}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Gallery Modal */}
       {galleryOpen && (
